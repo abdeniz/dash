@@ -21,7 +21,7 @@ export function Network() {
           <div className="flex flex-col justify-center w-full">
             <div className="flex gap-4 w-full">
               <div className="flex items-end-safe">
-                <p className="font-normal text-2xl tracking-tightest text-primary tabular-nums">
+                <p className="font-normal text-2xl tracking-tightest text-primary">
                   {rxMB.toFixed(1)}
                 </p>
                 <div className="text-muted-foreground flex items-center">
@@ -31,7 +31,7 @@ export function Network() {
               </div>
 
               <div className="flex items-end-safe">
-                <p className="font-normal text-2xl tracking-tightest text-primary tabular-nums">
+                <p className="font-normal text-2xl tracking-tightest text-primary">
                   {txMB.toFixed(1)}
                 </p>
                 <div className="text-muted-foreground flex items-center">
