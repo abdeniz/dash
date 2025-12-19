@@ -14,8 +14,6 @@ export function useUptime(): { uptime: Uptime | null; isLoading: boolean } {
     queryFn: getUptime,
   })
 
-  console.log(data)
-
   const [tick, setTick] = useState(0)
 
   useEffect(() => {
