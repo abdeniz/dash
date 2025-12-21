@@ -17,15 +17,6 @@ function Card({
       )}
       {...props}
     >
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="bg-linear-to-br from-muted/80 to-secondary/80"></div>
-        <img
-          src="https://assets.aceternity.com/noise.webp"
-          alt="noise texture"
-          className="h-full w-full object-cover opacity-5"
-          style={{ mixBlendMode: 'overlay' }}
-        />
-      </div>
       {props.children}
     </div>
   )
