@@ -1,4 +1,4 @@
-import { getCPU } from '@/api/cpu/api'
+import { getCPU } from '@/api/system/cpu/api'
 import { useQuery } from '@tanstack/react-query'
 
 export function useCPU() {

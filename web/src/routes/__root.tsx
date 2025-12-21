@@ -3,7 +3,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+    },
+  },
+})
 
 import { ThemeProvider } from '@/providers/theme-provider'
 import appCss from '../styles.css?url'
@@ -43,7 +49,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body className="bg-background">
         <ThemeProvider defaultTheme="system" storageKey="dashy-ui-theme">
           <QueryClientProvider client={queryClient}>
-            <main className="relative max-w-300 mx-auto py-6 px-6 ">
+            <main className="relative max-w-425 mx-auto py-6 px-6 ">
               {children}
             </main>
 

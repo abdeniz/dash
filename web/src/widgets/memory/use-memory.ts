@@ -1,15 +1,15 @@
-import { getMemory } from "@/api/memory/api";
-import { useQuery } from "@tanstack/react-query";
+import { getMemory } from '@/api/system/memory/api'
+import { useQuery } from '@tanstack/react-query'
 
 export function useMemory() {
   const { data, isLoading } = useQuery({
-    queryKey: ["system", "memory"],
+    queryKey: ['system', 'memory'],
     queryFn: getMemory,
     refetchInterval: 3000,
-  });
+  })
 
   return {
     ...data,
     isLoading,
-  };
+  }
 }

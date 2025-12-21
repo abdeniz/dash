@@ -1,4 +1,4 @@
-import { getNetwork } from '@/api/network/api'
+import { getNetwork } from '@/api/system/network/api'
 import { useQuery } from '@tanstack/react-query'
 
 export function useNetwork() {

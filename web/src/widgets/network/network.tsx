@@ -3,9 +3,12 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { bytesToMegabytes } from '@/lib/utils'
 import { ArrowDownIcon, ArrowUpIcon } from '@phosphor-icons/react'
 import { useNetwork } from './use-network'
+import { NetworkGlobe } from './network-globe'
+import { useTheme } from '@/providers/theme-provider'
 
 export function Network() {
   const { rx, tx, isLoading } = useNetwork()
+  const { theme } = useTheme()
 
   if (isLoading) {
     return <Skeleton className="h-20 w-full rounded-4xl corner-squircle" />
@@ -45,6 +48,8 @@ export function Network() {
             </p>
           </div>
         </div>
+
+        <NetworkGlobe theme={theme} />
       </CardContent>
     </Card>
   )

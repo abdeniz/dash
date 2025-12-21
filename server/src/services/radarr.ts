@@ -1,24 +1,41 @@
-const RADARR_URL = process.env.RADARR_URL || "http://localhost:7878";
-const RADARR_API_KEY = process.env.RADARR_API_KEY || "";
+import { RadarrClient } from "tsarr";
 
-const headers = {
-  "X-Api-Key": RADARR_API_KEY,
-};
+const radarr = new RadarrClient({
+  baseUrl: Bun.env.RADARR_URL!,
+  apiKey: Bun.env.RADARR_API_KEY!,
+});
 
 export const getQueue = async () => {
-  const res = await fetch(`${RADARR_URL}/api/v3/queue`, { headers });
-  return await res.json();
-};
-
-export const getRecentlyAdded = async () => {
-  const res = await fetch(
-    `${RADARR_URL}/api/v3/history/movie?sortKey=date&sortDir=desc&pageSize=5`,
-    { headers }
-  );
-  return await res.json();
+  return await radarr.getQueue();
 };
 
 export const getStatus = async () => {
-  const res = await fetch(`${RADARR_URL}/api/v3/system/status`, { headers });
-  return await res.json();
+  return await radarr.getSystemStatus();
+};
+
+export const getMovies = async () => {
+  return await radarr.getMovies();
+};
+
+export const getRadarrInfo = async () => {
+  const { data: movies } = await getMovies();
+  const { data: queue } = await getQueue();
+
+  const total = movies?.length;
+  const missing = movies?.filter((m) => !m.hasFile);
+  const queued = queue?.totalRecords;
+
+  return {
+    movies: movies?.slice(0, 10).map((movie) => ({
+      id: movie.id,
+      title: movie.title,
+      year: movie.year,
+      status: movie.status,
+      images: movie.images,
+      tmdbId: movie.tmdbId,
+    })),
+    total,
+    missing,
+    queued,
+  };
 };

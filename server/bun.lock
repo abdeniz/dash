@@ -1,11 +1,13 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "server",
       "dependencies": {
         "hono": "^4.11.1",
         "systeminformation": "^5.27.14",
+        "tsarr": "^1.9.0",
       },
       "devDependencies": {
         "@types/bun": "latest",
@@ -22,6 +24,8 @@
     "hono": ["hono@4.11.1", "", {}, "sha512-KsFcH0xxHes0J4zaQgWbYwmz3UPOOskdqZmItstUG93+Wk1ePBLkLGwbP9zlmh1BFUiL8Qp+Xfu9P7feJWpGNg=="],
 
     "systeminformation": ["systeminformation@5.27.14", "", { "os": "!aix", "bin": { "systeminformation": "lib/cli.js" } }, "sha512-3DoNDYSZBLxBwaJtQGWNpq0fonga/VZ47HY1+7/G3YoIPaPz93Df6egSzzTKbEMmlzUpy3eQ0nR9REuYIycXGg=="],
+
+    "tsarr": ["tsarr@1.9.0", "", {}, "sha512-GqS+0xrFUi+45lPAuCIf4GehGtCgb/xxFhwRpxFRduUflZOrB3AG/iQgxtZjrABjuxzBh8qRxYHTX4DDXNSfCg=="],
 
     "undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
   }

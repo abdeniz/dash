@@ -1,4 +1,4 @@
-import { getUptime } from '@/api/uptime/api'
+import { getUptime } from '@/api/system/uptime/api'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 

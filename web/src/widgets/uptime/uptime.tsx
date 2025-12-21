@@ -27,11 +27,24 @@ export function Uptime() {
           Uptime
         </p>
 
-        <div className="absolute -right-37 -top-16 w-48 h-48">
+        <div className="absolute -right-20 -top-11 w-48 h-48">
           <div className="relative">
+            <svg
+              width="400"
+              height="400"
+              className="absolute -top-1 -left-1 opacity-100"
+            >
+              <circle
+                cx="100"
+                cy="100"
+                r="85"
+                fill="var(--secondary)"
+                stroke="var(--border)"
+              />
+            </svg>
             <img
               src="/img/ticks.png"
-              className="absolute top-0 left-0 clock-rotate"
+              className="absolute top-4 left-4 w-40 h-40 clock-rotate"
             />
             <img src="/img/hand.png" className="absolute top-0 left-0" />
           </div>
