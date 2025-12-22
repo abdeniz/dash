@@ -1,4 +1,4 @@
-import { SonarrClient, Sonarr } from "tsarr";
+import { SonarrClient } from "tsarr";
 
 const request = async (path: string, url: string, apiKey: string) => {
   const res = await fetch(`${url}/api/v3${path}`, {
