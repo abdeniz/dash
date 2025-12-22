@@ -4,10 +4,6 @@ const getQueue = async (radarr: RadarrClient) => {
   return await radarr.getQueue();
 };
 
-const getStatus = async (radarr: RadarrClient) => {
-  return await radarr.getSystemStatus();
-};
-
 const getMovies = async (radarr: RadarrClient) => {
   return await radarr.getMovies();
 };
