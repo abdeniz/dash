@@ -1,25 +1,20 @@
 import { RadarrClient } from "tsarr";
 
-const radarr = new RadarrClient({
-  baseUrl: Bun.env.RADARR_URL!,
-  apiKey: Bun.env.RADARR_API_KEY!,
-});
-
-export const getQueue = async () => {
+const getQueue = async (radarr: RadarrClient) => {
   return await radarr.getQueue();
 };
 
-export const getStatus = async () => {
+const getStatus = async (radarr: RadarrClient) => {
   return await radarr.getSystemStatus();
 };
 
-export const getMovies = async () => {
+const getMovies = async (radarr: RadarrClient) => {
   return await radarr.getMovies();
 };
 
-export const getRadarrInfo = async () => {
-  const { data: movies } = await getMovies();
-  const { data: queue } = await getQueue();
+export const getRadarrValue = async (radarr: RadarrClient) => {
+  const { data: movies } = await getMovies(radarr);
+  const { data: queue } = await getQueue(radarr);
 
   const total = movies?.length;
   const missing = movies?.filter((m) => !m.hasFile);

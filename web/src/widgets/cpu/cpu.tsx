@@ -2,10 +2,11 @@ import { Card, CardContent } from '@/components/ui/card'
 import { FlickeringGrid } from '@/components/ui/flickering-grid'
 import { Progress } from '@/components/ui/progress'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useCPU } from './use-cpu'
+import { WidgetProps } from '../types'
+import { useWidgetData } from '@/hooks/use-widget-data'
 
-export function CPU() {
-  const { avg, isLoading } = useCPU()
+export function CPU({ widgetId }: WidgetProps) {
+  const { data, isLoading } = useWidgetData<{ avg: number }>(widgetId)
 
   if (isLoading) {
     return <Skeleton className="h-20 w-full rounded-4xl corner-squircle" />
@@ -19,7 +20,7 @@ export function CPU() {
             <div className="flex flex-col justify-center">
               <div className="flex items-end-safe gap-0">
                 <p className="font-normal text-2xl tracking-tightest text-primary">
-                  {avg?.toFixed(0) ?? 0}
+                  {data?.avg?.toFixed(0) ?? 0}
                 </p>
                 <p className="text-muted-foreground text-xl font-normal">%</p>
               </div>
@@ -42,7 +43,7 @@ export function CPU() {
 
         <Progress
           className="absolute -bottom-2.5 left-0 w-full"
-          value={avg ?? 0}
+          value={data?.avg ?? 0}
         />
       </CardContent>
     </Card>
