@@ -9,13 +9,38 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { FilmStripIcon } from '@phosphor-icons/react'
 import { MovieCarousel } from './movie-carousel'
 import { useRadarr } from './use-radarr'
+import { WidgetProps } from '../types'
+import { useWidgetData } from '@/hooks/use-widget-data'
 
-export function Radarr() {
-  const { total, queued, missing, movies, isLoading } = useRadarr()
+export type Movie = {
+  id: number
+  title: string
+  originalTitle: string
+  status: string
+  images: Array<{
+    coverType: string
+    url: string
+    remoteUrl: string
+  }>
+  year: number
+  tmdbId: number
+}
 
-  if (isLoading) {
+type RadarrData = {
+  total: number
+  missing: Movie[]
+  queued: number
+  movies: Movie[]
+}
+
+export function Radarr({ widgetId }: WidgetProps) {
+  const { data, isLoading } = useWidgetData<RadarrData>(widgetId)
+
+  if (isLoading || !data) {
     return <Skeleton className="h-40 w-full rounded-4xl corner-squircle" />
   }
+
+  const { total, queued, missing, movies } = data
 
   return (
     <Card>

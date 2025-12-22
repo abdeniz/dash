@@ -1,21 +1,27 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useWidgetData } from '@/hooks/use-widget-data'
 import { bytesToMegabytes } from '@/lib/utils'
-import { ArrowDownIcon, ArrowUpIcon } from '@phosphor-icons/react'
-import { useNetwork } from './use-network'
-import { NetworkGlobe } from './network-globe'
 import { useTheme } from '@/providers/theme-provider'
+import { ArrowDownIcon, ArrowUpIcon } from '@phosphor-icons/react'
+import { WidgetProps } from '../types'
+import { NetworkGlobe } from './network-globe'
 
-export function Network() {
-  const { rx, tx, isLoading } = useNetwork()
+type NetworkData = {
+  rx: number
+  tx: number
+}
+
+export function Network({ widgetId }: WidgetProps) {
+  const { data, isLoading } = useWidgetData<NetworkData>(widgetId)
   const { theme } = useTheme()
 
   if (isLoading) {
     return <Skeleton className="h-20 w-full rounded-4xl corner-squircle" />
   }
 
-  const rxMB = bytesToMegabytes(rx ?? 0)
-  const txMB = bytesToMegabytes(tx ?? 0)
+  const rxMB = bytesToMegabytes(data?.rx ?? 0)
+  const txMB = bytesToMegabytes(data?.tx ?? 0)
 
   return (
     <Card>

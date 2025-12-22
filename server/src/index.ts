@@ -1,26 +1,20 @@
-import { Hono } from "hono";
-import { corsMiddleware } from "./middlewares/cors";
-import systemRoutes from "./routes/system";
-import radarrRoutes from "./routes/radarr";
-import sonarrRoutes from "./routes/sonarr";
-const app = new Hono();
+import cors from "@elysiajs/cors";
+import { Elysia } from "elysia";
+import { widgetsRoutes } from "./routes/widgets/widgets.routes";
 
-app.use("*", corsMiddleware);
-
-app.get("/", (c) => c.text("Hello Hono!"));
-
-// Routes
-app.route("/api/system", systemRoutes);
-app.route("/api/radarr", radarrRoutes);
-app.route("/api/sonarr", sonarrRoutes);
-
-const port = Number(process.env.PORT ?? 3001);
-
-Bun.serve({
-  port,
-  fetch: app.fetch,
-  hostname: "0.0.0.0",
-});
+const app = new Elysia()
+  .use(
+    cors({
+      origin: "*",
+    }),
+  )
+  .use(widgetsRoutes)
+  .get("/", () => "root")
+  .listen(3003);
 
 // eslint-disable-next-line no-console
-console.log(`Server running at http://localhost:${port}`);
+console.log(
+  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
+);
+
+export type App = typeof app;

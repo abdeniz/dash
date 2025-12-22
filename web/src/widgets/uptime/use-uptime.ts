@@ -1,5 +1,4 @@
-import { getUptime } from '@/api/system/uptime/api'
-import { useQuery } from '@tanstack/react-query'
+import { useWidgetData } from '@/hooks/use-widget-data'
 import { useEffect, useState } from 'react'
 
 type Uptime = {
@@ -8,11 +7,11 @@ type Uptime = {
   s: number
 }
 
-export function useUptime(): { uptime: Uptime | null; isLoading: boolean } {
-  const { data, isLoading } = useQuery({
-    queryKey: ['system', 'uptime'],
-    queryFn: getUptime,
-  })
+export function useUptime(widgetId: number): {
+  uptime: Uptime | null
+  isLoading: boolean
+} {
+  const { data, isLoading } = useWidgetData<{ uptime: number }>(widgetId)
 
   const [tick, setTick] = useState(0)
 
