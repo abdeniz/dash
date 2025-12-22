@@ -5,11 +5,7 @@ import {
   getWidgetValue,
 } from "@/services/widgets.service";
 import { Elysia, t } from "elysia";
-import {
-  createWidgetSchema,
-  getWidgetValueSchema,
-  selectWidgetSchema,
-} from "./widgets.schema";
+import { createWidgetSchema, getWidgetValueSchema } from "./widgets.schema";
 
 export const widgetsRoutes = new Elysia({ prefix: "/widgets" })
   .get("/", () => getWidgets(), {
