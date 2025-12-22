@@ -2,6 +2,7 @@ import { CPUProvider } from "./widgets/CPUProvider";
 import { MemoryProvider } from "./widgets/MemoryProvider";
 import { NetworkProvider } from "./widgets/NetworkProvider";
 import { RadarrProvider } from "./widgets/RadarrProvider";
+import { SonarrProvider } from "./widgets/SonarrProvider";
 import { UptimeProvider } from "./widgets/UptimeProvider";
 import { IWidgetProvider } from "./widgets/WidgetProvider";
 
@@ -14,6 +15,7 @@ const providers: Record<string, new () => IWidgetProvider> = {
 
   // Media
   radarr: RadarrProvider,
+  sonarr: SonarrProvider,
 };
 
 export default providers;

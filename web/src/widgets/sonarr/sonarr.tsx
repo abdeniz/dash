@@ -7,16 +7,47 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from '@/components/ui/hover-card'
-import { useSonarr } from './use-sonarr'
-import { ShowCarousel } from './show-carousel'
+import { useWidgetData } from '@/hooks/use-widget-data'
 import { TelevisionIcon } from '@phosphor-icons/react'
+import { WidgetProps } from '../types'
+import { ShowCarousel } from './show-carousel'
 
-export function Sonarr() {
-  const { total, queued, missing, shows, isLoading } = useSonarr()
+export type Show = {
+  id: number
+  title: string
+  originalTitle: string
+  status: string
+  images: Array<{
+    coverType: string
+    url: string
+    remoteUrl: string
+  }>
+  year: number
+  titleSlug: string
+}
 
-  if (isLoading) {
+type Missing = {
+  id: string
+  title: string
+  missingEpisodes: number
+  year: number
+}
+
+type SonarrData = {
+  total: number
+  missing: Missing[]
+  queued: number
+  shows: Show[]
+}
+
+export function Sonarr({ widgetId }: WidgetProps) {
+  const { data, isLoading } = useWidgetData<SonarrData>(widgetId)
+
+  if (isLoading || !data) {
     return <Skeleton className="h-40 w-full rounded-4xl corner-squircle" />
   }
+
+  const { total, queued, missing, shows } = data
 
   return (
     <Card>

@@ -6,11 +6,10 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { FilmStripIcon } from '@phosphor-icons/react'
-import { MovieCarousel } from './movie-carousel'
-import { useRadarr } from './use-radarr'
-import { WidgetProps } from '../types'
 import { useWidgetData } from '@/hooks/use-widget-data'
+import { FilmStripIcon } from '@phosphor-icons/react'
+import { WidgetProps } from '../types'
+import { MovieCarousel } from './movie-carousel'
 
 export type Movie = {
   id: number

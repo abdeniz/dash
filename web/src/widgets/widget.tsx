@@ -4,6 +4,7 @@ import { Memory } from './memory/memory'
 import { Network } from './network/network'
 import { Uptime } from './uptime/uptime'
 import { Radarr } from './radarr/radarr'
+import { Sonarr } from './sonarr/sonarr'
 
 type WidgetProps = {
   widgetId: number
@@ -25,6 +26,8 @@ export const Widget = ({
         return <Uptime widgetId={widgetId} />
       case 'radarr':
         return <Radarr widgetId={widgetId} />
+      case 'sonarr':
+        return <Sonarr widgetId={widgetId} />
       default:
         return <Card>Widget not found</Card>
     }
