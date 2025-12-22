@@ -1,13 +1,14 @@
 import { Card, CardContent } from '@/components/ui/card'
 
-import { Skeleton } from '@/components/ui/skeleton'
-import { MovieCarousel } from './movie-carousel'
-import { useRadarr } from './use-radarr'
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from '@/components/ui/hover-card'
+import { Skeleton } from '@/components/ui/skeleton'
+import { FilmStripIcon } from '@phosphor-icons/react'
+import { MovieCarousel } from './movie-carousel'
+import { useRadarr } from './use-radarr'
 
 export function Radarr() {
   const { total, queued, missing, movies, isLoading } = useRadarr()
@@ -64,9 +65,17 @@ export function Radarr() {
             </HoverCard>
           </div>
 
-          <p className="text-muted-foreground text-base uppercase tracking-wider">
-            Radarr
-          </p>
+          <div className="flex items-center gap-1">
+            <FilmStripIcon
+              weight="duotone"
+              className="text-primary"
+              size={20}
+            />
+
+            <p className="text-muted-foreground text-base uppercase tracking-wider">
+              Radarr
+            </p>
+          </div>
         </div>
 
         {movies && movies.length > 0 && <MovieCarousel movies={movies} />}

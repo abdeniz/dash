@@ -13,7 +13,6 @@ const queryClient = new QueryClient({
 
 import { ThemeProvider } from '@/providers/theme-provider'
 import appCss from '../styles.css?url'
-import { ThemeToggle } from '@/components/theme-toggle'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -26,7 +25,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: 'dash',
       },
     ],
     links: [
@@ -49,7 +48,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body className="bg-background">
         <ThemeProvider defaultTheme="system" storageKey="dashy-ui-theme">
           <QueryClientProvider client={queryClient}>
-            <main className="relative max-w-425 mx-auto py-6 px-6 ">
+            <main className="relative max-w-400 mx-auto p-3 md:p-6">
               {children}
             </main>
 
@@ -65,7 +64,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               ]}
             />
             <Scripts />
-            <ThemeToggle />
           </QueryClientProvider>
         </ThemeProvider>
       </body>

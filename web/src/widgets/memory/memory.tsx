@@ -1,14 +1,14 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useMemory } from "./use-memory";
-import { megabytesToGigabytes } from "@/lib/utils";
+import { Card, CardContent } from '@/components/ui/card'
+import { Progress } from '@/components/ui/progress'
+import { Skeleton } from '@/components/ui/skeleton'
+import { useMemory } from './use-memory'
+import { megabytesToGigabytes } from '@/lib/utils'
 
 export function Memory() {
-  const { total, used, usedPercentage, isLoading } = useMemory();
+  const { total, used, usedPercentage, isLoading } = useMemory()
 
   if (isLoading) {
-    return <Skeleton className="h-20 w-full rounded-4xl corner-squircle" />;
+    return <Skeleton className="h-20 w-full rounded-4xl corner-squircle" />
   }
 
   return (
@@ -45,10 +45,10 @@ export function Memory() {
           </div>
         </div>
         <Progress
-          className="absolute -bottom-2 left-0 w-full"
+          className="absolute -bottom-2.5 left-0 w-full"
           value={usedPercentage ?? 0}
         />
       </CardContent>
     </Card>
-  );
+  )
 }

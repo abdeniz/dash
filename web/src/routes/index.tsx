@@ -1,3 +1,4 @@
+import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler'
 import { Card, CardContent } from '@/components/ui/card'
 import { CPU } from '@/widgets/cpu/cpu'
 import { Memory } from '@/widgets/memory/memory'
@@ -11,8 +12,8 @@ export const Route = createFileRoute('/')({ component: App })
 
 function App() {
   return (
-    <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="flex flex-col gap-2 md:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
         <CPU />
 
         <Memory />
@@ -22,13 +23,15 @@ function App() {
         <Uptime />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-2 md:gap-4">
         <Radarr />
 
         <Sonarr />
 
         <Card>
-          <CardContent className="h-24"></CardContent>
+          <CardContent className="h-24">
+            <AnimatedThemeToggler />
+          </CardContent>
         </Card>
 
         <Card>

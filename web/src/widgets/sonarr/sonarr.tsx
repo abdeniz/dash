@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/hover-card'
 import { useSonarr } from './use-sonarr'
 import { ShowCarousel } from './show-carousel'
+import { TelevisionIcon } from '@phosphor-icons/react'
 
 export function Sonarr() {
   const { total, queued, missing, shows, isLoading } = useSonarr()
@@ -69,9 +70,17 @@ export function Sonarr() {
             </HoverCard>
           </div>
 
-          <p className="text-muted-foreground text-base uppercase tracking-wider">
-            Sonarr
-          </p>
+          <div className="flex items-center gap-1">
+            <TelevisionIcon
+              weight="duotone"
+              className="text-primary"
+              size={20}
+            />
+
+            <p className="text-muted-foreground text-base uppercase tracking-wider">
+              Sonarr
+            </p>
+          </div>
         </div>
 
         {shows && shows.length > 0 && <ShowCarousel shows={shows} />}

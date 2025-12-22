@@ -29,17 +29,14 @@ export function Uptime() {
 
         <div className="absolute -right-20 -top-11 w-48 h-48">
           <div className="relative">
-            <svg
-              width="400"
-              height="400"
-              className="absolute -top-1 -left-1 opacity-100"
-            >
+            <svg width="400" height="400" className="absolute -top-1 -left-1">
               <circle
                 cx="100"
                 cy="100"
                 r="85"
                 fill="var(--secondary)"
                 stroke="var(--border)"
+                strokeWidth={1.5}
               />
             </svg>
             <img
