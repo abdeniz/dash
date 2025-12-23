@@ -5,14 +5,11 @@ import { Network } from "./network/network"
 import { Uptime } from "./uptime/uptime"
 import { Radarr } from "./radarr/radarr"
 import { Sonarr } from "./sonarr/sonarr"
+import { WidgetProps } from "./types"
 
-type WidgetProps = {
-  widgetId: number
-  pollInterval: number | null
-  typeId: string
-}
-
-export const Widget = ({ widgetId, typeId, pollInterval }: WidgetProps) => {
+export const Widget = ({
+  widget: { id, pollInterval, typeId },
+}: WidgetProps) => {
   const getWidget = (typeId: string) => {
     const componentMap: Record<string, React.ComponentType<any>> = {
       cpu: CPU,
@@ -26,7 +23,7 @@ export const Widget = ({ widgetId, typeId, pollInterval }: WidgetProps) => {
     const Component = componentMap[typeId]
 
     return Component ? (
-      <Component metadata={{ widgetId, pollInterval }} />
+      <Component widget={{ id, pollInterval, typeId }} />
     ) : (
       <Card>Widget not found</Card>
     )

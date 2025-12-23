@@ -8,11 +8,11 @@ type Uptime = {
   s: number
 }
 
-export function useUptime(metadata: WidgetProps["metadata"]): {
+export function useUptime({ widget }: WidgetProps): {
   uptime: Uptime | null
   isLoading: boolean
 } {
-  const { data, isLoading } = useWidgetData<{ uptime: number }>(metadata)
+  const { data, isLoading } = useWidgetData<{ uptime: number }>({ widget })
 
   const [tick, setTick] = useState(0)
 

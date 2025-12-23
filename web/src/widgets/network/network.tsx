@@ -4,16 +4,16 @@ import { useWidgetData } from "@/hooks/use-widget-data"
 import { bytesToMegabytes } from "@/lib/utils"
 import { useTheme } from "@/providers/theme-provider"
 import { ArrowDownIcon, ArrowUpIcon } from "@phosphor-icons/react"
-import { WidgetProps } from "../types"
 import { NetworkGlobe } from "./network-globe"
+import { WidgetProps } from "../types"
 
 type NetworkData = {
   rx: number
   tx: number
 }
 
-export function Network({ metadata }: WidgetProps) {
-  const { data, isLoading } = useWidgetData<NetworkData>(metadata)
+export function Network(widget: WidgetProps) {
+  const { data, isLoading } = useWidgetData<NetworkData>(widget)
   const { theme } = useTheme()
 
   if (isLoading) {

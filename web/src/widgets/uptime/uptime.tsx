@@ -1,11 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import { WidgetProps } from "../types"
 import { UptimeDisplay } from "./uptime-display"
 import { useUptime } from "./use-uptime"
+import { WidgetProps } from "../types"
 
-export function Uptime({ metadata }: WidgetProps) {
-  const { uptime, isLoading } = useUptime(metadata)
+export function Uptime(widget: WidgetProps) {
+  const { uptime, isLoading } = useUptime(widget)
 
   if (isLoading) {
     return <Skeleton className="h-20 w-full rounded-4xl corner-squircle" />

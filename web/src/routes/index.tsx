@@ -1,9 +1,9 @@
 import { app } from "@/api/client"
 import { CommandMenu } from "@/components/command-menu"
 import { Widget } from "@/widgets/widget"
-import { widgetTypes } from "@/widgets/widget-types"
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
+import { type WidgetType, definitions } from "@widgets/index"
 import ReactGridLayout, { useContainerWidth } from "react-grid-layout"
 
 export const Route = createFileRoute("/")({
@@ -38,7 +38,7 @@ function App() {
             }
           >
             {data?.data?.map((widget) => {
-              const maxes = widgetTypes[widget.typeId]
+              const maxes = definitions[widget.typeId as WidgetType].layout
 
               return (
                 <div
@@ -51,11 +51,7 @@ function App() {
                     ...maxes,
                   }}
                 >
-                  <Widget
-                    widgetId={widget.id}
-                    typeId={widget.typeId}
-                    pollInterval={widget.pollInterval}
-                  />
+                  <Widget widget={widget} />
                 </div>
               )
             })}

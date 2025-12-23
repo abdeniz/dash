@@ -24,10 +24,14 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"], // keep web alias
-      "@server/*": ["../server/*"] // import server types
+      "@server/*": ["../server/*"], // import server types
+      "@widgets/*": ["../widgets/src"]
     }
   },
   "references": [
+    {
+      "path": "../widgets"
+    },
     {
       "path": "../server"
     }

@@ -13,8 +13,8 @@ type MemoryData = {
   usedPercentage: number
 }
 
-export function Memory({ metadata }: WidgetProps) {
-  const { data, isLoading } = useWidgetData<MemoryData>(metadata)
+export function Memory(widget: WidgetProps) {
+  const { data, isLoading } = useWidgetData<MemoryData>(widget)
 
   if (isLoading) {
     return <Skeleton className="h-20 w-full rounded-4xl corner-squircle" />
