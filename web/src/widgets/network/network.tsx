@@ -1,19 +1,19 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
-import { useWidgetData } from '@/hooks/use-widget-data'
-import { bytesToMegabytes } from '@/lib/utils'
-import { useTheme } from '@/providers/theme-provider'
-import { ArrowDownIcon, ArrowUpIcon } from '@phosphor-icons/react'
-import { WidgetProps } from '../types'
-import { NetworkGlobe } from './network-globe'
+import { Card, CardContent } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
+import { useWidgetData } from "@/hooks/use-widget-data"
+import { bytesToMegabytes } from "@/lib/utils"
+import { useTheme } from "@/providers/theme-provider"
+import { ArrowDownIcon, ArrowUpIcon } from "@phosphor-icons/react"
+import { WidgetProps } from "../types"
+import { NetworkGlobe } from "./network-globe"
 
 type NetworkData = {
   rx: number
   tx: number
 }
 
-export function Network({ widgetId }: WidgetProps) {
-  const { data, isLoading } = useWidgetData<NetworkData>(widgetId)
+export function Network({ metadata }: WidgetProps) {
+  const { data, isLoading } = useWidgetData<NetworkData>(metadata)
   const { theme } = useTheme()
 
   if (isLoading) {

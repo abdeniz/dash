@@ -1,12 +1,12 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { FlickeringGrid } from '@/components/ui/flickering-grid'
-import { Progress } from '@/components/ui/progress'
-import { Skeleton } from '@/components/ui/skeleton'
-import { WidgetProps } from '../types'
-import { useWidgetData } from '@/hooks/use-widget-data'
+import { Card, CardContent } from "@/components/ui/card"
+import { FlickeringGrid } from "@/components/ui/flickering-grid"
+import { Progress } from "@/components/ui/progress"
+import { Skeleton } from "@/components/ui/skeleton"
+import { WidgetProps } from "../types"
+import { useWidgetData } from "@/hooks/use-widget-data"
 
-export function CPU({ widgetId }: WidgetProps) {
-  const { data, isLoading } = useWidgetData<{ avg: number }>(widgetId)
+export function CPU({ metadata }: WidgetProps) {
+  const { data, isLoading } = useWidgetData<{ avg: number }>(metadata)
 
   if (isLoading) {
     return <Skeleton className="h-20 w-full rounded-4xl corner-squircle" />
@@ -15,7 +15,7 @@ export function CPU({ widgetId }: WidgetProps) {
   return (
     <Card>
       <CardContent className="h-full relative w-full">
-        <div className="flex items-center justify-between w-full h-full">
+        <div className="flex items-start justify-between w-full h-full">
           <div className="flex w-full items-center justify-between gap-4 mb-1">
             <div className="flex flex-col justify-center">
               <div className="flex items-end-safe gap-0">

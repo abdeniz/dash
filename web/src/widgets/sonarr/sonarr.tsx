@@ -1,16 +1,16 @@
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent } from "@/components/ui/card"
 
-import { Skeleton } from '@/components/ui/skeleton'
+import { Skeleton } from "@/components/ui/skeleton"
 
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from '@/components/ui/hover-card'
-import { useWidgetData } from '@/hooks/use-widget-data'
-import { TelevisionIcon } from '@phosphor-icons/react'
-import { WidgetProps } from '../types'
-import { ShowCarousel } from './show-carousel'
+} from "@/components/ui/hover-card"
+import { useWidgetData } from "@/hooks/use-widget-data"
+import { TelevisionIcon } from "@phosphor-icons/react"
+import { WidgetProps } from "../types"
+import { ShowCarousel } from "./show-carousel"
 
 export type Show = {
   id: number
@@ -40,8 +40,8 @@ type SonarrData = {
   shows: Show[]
 }
 
-export function Sonarr({ widgetId }: WidgetProps) {
-  const { data, isLoading } = useWidgetData<SonarrData>(widgetId)
+export function Sonarr({ metadata }: WidgetProps) {
+  const { data, isLoading } = useWidgetData<SonarrData>(metadata)
 
   if (isLoading || !data) {
     return <Skeleton className="h-40 w-full rounded-4xl corner-squircle" />
@@ -91,7 +91,7 @@ export function Sonarr({ widgetId }: WidgetProps) {
                   {missing?.map((show) => (
                     <li>
                       <h4>
-                        {show.title} ({show.year}) | {show.missingEpisodes ?? 0}{' '}
+                        {show.title} ({show.year}) | {show.missingEpisodes ?? 0}{" "}
                         episodes
                       </h4>
                     </li>

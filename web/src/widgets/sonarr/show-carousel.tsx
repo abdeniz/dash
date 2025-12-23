@@ -1,11 +1,11 @@
-import { Show } from '@/api/sonarr/api'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent } from "@/components/ui/card"
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from '@/components/ui/carousel'
-import Autoplay from 'embla-carousel-autoplay'
+} from "@/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay"
+import { Show } from "./sonarr"
 
 type ShowCarouselProps = {
   shows: Show[]
@@ -15,7 +15,7 @@ export function ShowCarousel({ shows }: ShowCarouselProps) {
   return (
     <Carousel
       opts={{
-        align: 'start',
+        align: "start",
         loop: true,
       }}
       className="max-w-2/3 w-full h-full flex-1 overflow-hidden rounded-lg"
@@ -37,15 +37,15 @@ export function ShowCarousel({ shows }: ShowCarouselProps) {
               rel="noreferrer"
               className="group"
             >
-              <Card className="py-0 rounded-xl">
-                <CardContent className="flex aspect-6/9  items-center justify-center h-full relative select-none">
+              <Card className="py-0 rounded-xl! border-2">
+                <CardContent className="flex items-center justify-center h-full relative select-none">
                   <img
                     alt={show.title}
                     src={
-                      show.images.find((img) => img.coverType === 'poster')
+                      show.images.find((img) => img.coverType === "poster")
                         ?.remoteUrl
                     }
-                    className="absolute top-0 left-0 w-full h-full object-fill"
+                    className="absolute top-0 left-0 w-full h-full object-cover"
                   />
                   <div className="absolute bottom-0 left-0 w-full text-center overflow-hidden text-wrap px-1 pb-3 pt-6 leading-tight opacity-0 group-hover:opacity-100 font-medium transition-opacity bg-linear-to-b from-transparent to-background">
                     {show.title} ({show.year})
