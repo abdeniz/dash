@@ -23,7 +23,7 @@ export function MovieCarousel({ movies }: MovieCarouselProps) {
     >
       <CarouselContent>
         {movies.map((movie) => (
-          <MovieCard movie={movie} />
+          <MovieCard key={movie.id} movie={movie} />
         ))}
       </CarouselContent>
     </Carousel>

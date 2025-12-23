@@ -38,4 +38,4 @@ export const widgetTypes: Record<
     maxH: 6,
     maxW: 9,
   },
-}
+} as const

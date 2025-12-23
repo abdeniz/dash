@@ -9,7 +9,7 @@ export const widget = sqliteTable("widget", {
   width: real("width").notNull(),
   height: real("height").notNull(),
   pollInterval: integer("poll_interval"),
-  config: text("config").notNull(), // store JSON as string
+  config: text("config", { mode: "json" }).notNull(),
 });
 
 // TypeScript types
