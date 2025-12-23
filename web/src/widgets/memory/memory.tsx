@@ -1,9 +1,9 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { Progress } from '@/components/ui/progress'
-import { Skeleton } from '@/components/ui/skeleton'
-import { useWidgetData } from '@/hooks/use-widget-data'
-import { megabytesToGigabytes } from '@/lib/utils'
-import { WidgetProps } from '../types'
+import { Card, CardContent } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
+import { Skeleton } from "@/components/ui/skeleton"
+import { useWidgetData } from "@/hooks/use-widget-data"
+import { megabytesToGigabytes } from "@/lib/utils"
+import { WidgetProps } from "../types"
 
 type MemoryData = {
   total: number
@@ -13,8 +13,8 @@ type MemoryData = {
   usedPercentage: number
 }
 
-export function Memory({ widgetId }: WidgetProps) {
-  const { data, isLoading } = useWidgetData<MemoryData>(widgetId)
+export function Memory({ metadata }: WidgetProps) {
+  const { data, isLoading } = useWidgetData<MemoryData>(metadata)
 
   if (isLoading) {
     return <Skeleton className="h-20 w-full rounded-4xl corner-squircle" />
@@ -22,7 +22,7 @@ export function Memory({ widgetId }: WidgetProps) {
 
   return (
     <Card>
-      <CardContent className="h-full relative">
+      <CardContent className="h-full! relative">
         <div className="flex w-full items-center justify-between gap-4 mb-1">
           <div className="flex flex-col justify-center w-full">
             <div className="flex justify-between w-full">

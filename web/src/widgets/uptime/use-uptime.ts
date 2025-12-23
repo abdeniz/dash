@@ -1,5 +1,6 @@
-import { useWidgetData } from '@/hooks/use-widget-data'
-import { useEffect, useState } from 'react'
+import { useWidgetData } from "@/hooks/use-widget-data"
+import { useEffect, useState } from "react"
+import { WidgetProps } from "../types"
 
 type Uptime = {
   h: number
@@ -7,16 +8,16 @@ type Uptime = {
   s: number
 }
 
-export function useUptime(widgetId: number): {
+export function useUptime(metadata: WidgetProps["metadata"]): {
   uptime: Uptime | null
   isLoading: boolean
 } {
-  const { data, isLoading } = useWidgetData<{ uptime: number }>(widgetId)
+  const { data, isLoading } = useWidgetData<{ uptime: number }>(metadata)
 
   const [tick, setTick] = useState(0)
 
   useEffect(() => {
-    if (typeof data?.uptime !== 'number') return
+    if (typeof data?.uptime !== "number") return
 
     setTick(0)
     const id = setInterval(() => {
@@ -26,7 +27,7 @@ export function useUptime(widgetId: number): {
     return () => clearInterval(id)
   }, [data?.uptime])
 
-  if (typeof data?.uptime !== 'number') return { uptime: null, isLoading }
+  if (typeof data?.uptime !== "number") return { uptime: null, isLoading }
 
   return { uptime: formatUptime(data.uptime + tick), isLoading }
 }

@@ -1,3 +1,6 @@
 export type WidgetProps = {
-  widgetId: number
+  metadata: {
+    widgetId: number
+    pollInterval: number | null
+  }
 }

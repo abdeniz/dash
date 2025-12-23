@@ -1,14 +1,23 @@
-import { app } from '@/api/client'
-import { useQuery } from '@tanstack/react-query'
+import { app } from "@/api/client"
+import { useQuery } from "@tanstack/react-query"
 
-export function useWidgetData<TData>(widgetId: number): {
+const DEFAULT_POLL_INTERVAL = 5000
+
+export function useWidgetData<TData>({
+  widgetId,
+  pollInterval,
+}: {
+  widgetId: number
+  pollInterval: number | null
+}): {
   data: TData
   isLoading: boolean
   error: Error | null
 } {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['widget-data', widgetId],
+    queryKey: ["widget-data", widgetId],
     queryFn: () => app.widgets({ id: widgetId }).value.get(),
+    refetchInterval: pollInterval ?? DEFAULT_POLL_INTERVAL,
   })
 
   return { data: data?.data as TData, isLoading, error }

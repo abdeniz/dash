@@ -1,15 +1,15 @@
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent } from "@/components/ui/card"
 
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from '@/components/ui/hover-card'
-import { Skeleton } from '@/components/ui/skeleton'
-import { useWidgetData } from '@/hooks/use-widget-data'
-import { FilmStripIcon } from '@phosphor-icons/react'
-import { WidgetProps } from '../types'
-import { MovieCarousel } from './movie-carousel'
+} from "@/components/ui/hover-card"
+import { Skeleton } from "@/components/ui/skeleton"
+import { useWidgetData } from "@/hooks/use-widget-data"
+import { FilmStripIcon } from "@phosphor-icons/react"
+import { WidgetProps } from "../types"
+import { MovieCarousel } from "./movie-carousel"
 
 export type Movie = {
   id: number
@@ -32,8 +32,8 @@ type RadarrData = {
   movies: Movie[]
 }
 
-export function Radarr({ widgetId }: WidgetProps) {
-  const { data, isLoading } = useWidgetData<RadarrData>(widgetId)
+export function Radarr({ metadata }: WidgetProps) {
+  const { data, isLoading } = useWidgetData<RadarrData>(metadata)
 
   if (isLoading || !data) {
     return <Skeleton className="h-40 w-full rounded-4xl corner-squircle" />
