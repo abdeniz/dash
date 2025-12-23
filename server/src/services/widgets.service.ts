@@ -35,5 +35,5 @@ export async function getWidgetValue(widgetId: number) {
 
   const ProviderClass = providers[widget.typeId];
   const provider = new ProviderClass();
-  return provider.getValue(JSON.parse(widget.config));
+  return provider.getValue(widget.config);
 }

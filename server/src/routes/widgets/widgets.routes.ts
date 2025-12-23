@@ -18,7 +18,7 @@ export const widgetsRoutes = new Elysia({ prefix: "/widgets" })
         width: t.Number(),
         height: t.Number(),
         pollInterval: t.Nullable(t.Integer()),
-        config: t.String(),
+        config: t.Unknown(),
       }),
     ),
   })

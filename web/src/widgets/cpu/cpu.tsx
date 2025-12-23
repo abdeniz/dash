@@ -2,11 +2,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import { FlickeringGrid } from "@/components/ui/flickering-grid"
 import { Progress } from "@/components/ui/progress"
 import { Skeleton } from "@/components/ui/skeleton"
-import { WidgetProps } from "../types"
 import { useWidgetData } from "@/hooks/use-widget-data"
+import { WidgetProps } from "../types"
 
-export function CPU({ metadata }: WidgetProps) {
-  const { data, isLoading } = useWidgetData<{ avg: number }>(metadata)
+export function CPU(widget: WidgetProps) {
+  const { data, isLoading } = useWidgetData<{ avg: number }>(widget)
 
   if (isLoading) {
     return <Skeleton className="h-20 w-full rounded-4xl corner-squircle" />
