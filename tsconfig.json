@@ -2,7 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@server/*": ["server/*"]
+      "@server/*": ["server/*"],
+      "@widgets/*": ["widgets/*"]
     },
     "declaration": true,
     "emitDeclarationOnly": false,
@@ -12,5 +13,11 @@
     "incremental": true,
     "composite": true,
     "strict": true
-  }
+  },
+  "files": [],
+  "references": [
+    { "path": "./widgets" },
+    { "path": "./web" },
+    { "path": "./server" }
+  ]
 }
