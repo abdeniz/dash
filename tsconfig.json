@@ -9,7 +9,6 @@
     "emitDeclarationOnly": false,
     "declarationMap": true,
     "rootDir": ".",
-    "outDir": "dist",
     "incremental": true,
     "composite": true,
     "strict": true
