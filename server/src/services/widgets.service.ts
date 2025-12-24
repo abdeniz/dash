@@ -1,6 +1,6 @@
 import { orm } from "@/db";
 import { widget as widgetSchema, WidgetInsert, Widget } from "@/db/schema";
-import providers from "@/providers";
+import providers from "@/providers/index.gen";
 import { eq } from "drizzle-orm";
 import { NotFoundError } from "elysia";
 
