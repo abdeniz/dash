@@ -17,7 +17,7 @@ export function Sonarr(widget: WidgetProps) {
   const { data, isLoading } = useWidgetData<SonarrData>(widget)
 
   if (isLoading || !data) {
-    return <Skeleton className="h-40 w-full rounded-4xl corner-squircle" />
+    return <Skeleton className="h-full w-full rounded-4xl corner-squircle" />
   }
 
   const { total, queued, missing, shows, url } = data
@@ -28,16 +28,16 @@ export function Sonarr(widget: WidgetProps) {
         <div className="flex flex-col justify-between">
           <div className="flex flex-col">
             <div className="flex items-end gap-0.5">
-              <p className="font-normal text-2xl tracking-tightest text-primary tabular-nums leading-tight">
+              <p className="font-normal text-2xl tracking-tightest text-[#00CCFF] tabular-nums leading-tight">
                 {total}
               </p>
               <p className="text-muted-foreground text-xl font-normal uppercase">
-                Shows
+                Show{total > 1 ? "s" : ""}
               </p>
             </div>
 
             <div className="flex items-end gap-0.5">
-              <p className="font-normal text-2xl tracking-tightest text-primary tabular-nums leading-tight">
+              <p className="font-normal text-2xl tracking-tightest text-[#00CCFF] tabular-nums leading-tight">
                 {queued}
               </p>
               <p className="text-muted-foreground text-xl font-normal uppercase">
@@ -48,7 +48,7 @@ export function Sonarr(widget: WidgetProps) {
             <HoverCard>
               <HoverCardTrigger>
                 <div className="flex items-end gap-0.5 cursor-pointer group/missing">
-                  <p className="font-normal text-2xl tracking-tightest text-primary tabular-nums leading-tight">
+                  <p className="font-normal text-2xl tracking-tightest text-[#00CCFF] tabular-nums leading-tight">
                     {missing?.reduce(
                       (sum, item) => sum + item.missingEpisodes,
                       0,
@@ -77,7 +77,7 @@ export function Sonarr(widget: WidgetProps) {
           <div className="flex items-center gap-1">
             <TelevisionIcon
               weight="duotone"
-              className="text-primary"
+              className="text-[#00CCFF]"
               size={20}
             />
 

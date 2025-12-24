@@ -16,7 +16,7 @@ export function Radarr(widget: WidgetProps) {
   const { data, isLoading } = useWidgetData<RadarrData>(widget)
 
   if (isLoading || !data) {
-    return <Skeleton className="h-40 w-full rounded-4xl corner-squircle" />
+    return <Skeleton className="h-full w-full rounded-4xl corner-squircle" />
   }
 
   const { total, queued, missing, movies, url } = data
@@ -27,16 +27,16 @@ export function Radarr(widget: WidgetProps) {
         <div className="flex flex-col justify-between">
           <div className="flex flex-col">
             <div className="flex items-end gap-0.5">
-              <p className="font-normal text-2xl tracking-tightest text-primary tabular-nums leading-tight">
+              <p className="font-normal text-2xl tracking-tightest text-[#FFC230] tabular-nums leading-tight">
                 {total}
               </p>
               <p className="text-muted-foreground text-xl font-normal uppercase">
-                Movies
+                Movie{total > 1 ? "s" : ""}
               </p>
             </div>
 
             <div className="flex items-end gap-0.5">
-              <p className="font-normal text-2xl tracking-tightest text-primary tabular-nums leading-tight">
+              <p className="font-normal text-2xl tracking-tightest text-[#FFC230] tabular-nums leading-tight">
                 {queued}
               </p>
               <p className="text-muted-foreground text-xl font-normal uppercase">
@@ -47,7 +47,7 @@ export function Radarr(widget: WidgetProps) {
             <HoverCard>
               <HoverCardTrigger>
                 <div className="flex items-end gap-0.5 cursor-pointer group/missing">
-                  <p className="font-normal text-2xl tracking-tightest text-primary tabular-nums leading-tight">
+                  <p className="font-normal text-2xl tracking-tightest text-[#FFC230] tabular-nums leading-tight">
                     {missing?.length}
                   </p>
                   <p className="text-muted-foreground text-xl font-normal uppercase group-hover/missing:underline">
@@ -72,7 +72,7 @@ export function Radarr(widget: WidgetProps) {
           <div className="flex items-center gap-1">
             <FilmStripIcon
               weight="duotone"
-              className="text-primary"
+              className="text-[#FFC230]"
               size={20}
             />
 

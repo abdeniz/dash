@@ -14,6 +14,7 @@ type ActiveStream = {
   playMethod?: string;
   deviceName?: string | null;
   clientName?: string | null;
+  positionTicks?: number | null;
   nowPlayingItem?: {
     name: string;
     type: string;
@@ -58,6 +59,7 @@ export async function getJellyfinValue(
         playMethod: session.PlayState?.PlayMethod,
         deviceName: session.DeviceName,
         clientName: session.Client,
+        positionTicks: session.PlayState?.PositionTicks,
         nowPlayingItem: session.NowPlayingItem
           ? {
               name: session.NowPlayingItem.Name ?? "",
@@ -77,3 +79,5 @@ export async function getJellyfinValue(
     throw error;
   }
 }
+
+export type JellyfinData = Awaited<ReturnType<typeof getJellyfinValue>>;
