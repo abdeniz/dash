@@ -12,7 +12,8 @@
     "prettier": "^3.7.4"
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "sync": "bun run sync-widgets.ts"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
