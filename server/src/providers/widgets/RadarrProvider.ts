@@ -1,5 +1,5 @@
 import { RadarrClient } from "tsarr";
-import { IWidgetProvider } from "./WidgetProvider";
+import { IWidgetProvider } from "./IWidgetProvider";
 import { getRadarrValue } from "../clients/radarr";
 
 export class RadarrProvider implements IWidgetProvider<{

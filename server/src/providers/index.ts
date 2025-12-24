@@ -4,7 +4,7 @@ import { NetworkProvider } from "./widgets/NetworkProvider";
 import { RadarrProvider } from "./widgets/RadarrProvider";
 import { SonarrProvider } from "./widgets/SonarrProvider";
 import { UptimeProvider } from "./widgets/UptimeProvider";
-import { IWidgetProvider } from "./widgets/WidgetProvider";
+import { IWidgetProvider } from "./widgets/IWidgetProvider";
 
 const providers: Record<string, new () => IWidgetProvider> = {
   // System
