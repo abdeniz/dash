@@ -82,7 +82,7 @@ bun run dev
 3. **Implement logic/UI:**
    - Fill in the generated provider/component stubs as needed for your widget's functionality.
 
-**Tip:** The sync script uses [chalk](https://www.npmjs.com/package/chalk) for styled output and will warn you about missing files or successful generations.
+**Tip:** The sync script uses [chalk](https://www.npmjs.com/package/chalk) for styled output and will warn or inform you about missing files or successful generations.
 
 ## License
 
