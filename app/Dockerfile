@@ -1,45 +1,48 @@
 # Development stage
 FROM oven/bun:1 AS dev
-WORKDIR /app
+WORKDIR /app/app
 
-COPY package.json bun.lockb* ./
+# Copy root tsconfig to parent directory (needed by app tsconfig extends)
+COPY tsconfig.json /app/tsconfig.json
+
+# Copy app files
+COPY app/package.json app/bun.lockb* ./
 RUN bun install
 
-COPY . .
+COPY app/ ./
 
 EXPOSE 3000
 CMD ["bun", "run", "dev", "--host", "0.0.0.0"]
 
 # Production build stage
 FROM oven/bun:1 AS build
-WORKDIR /app
+WORKDIR /app/app
 
-# Copy root tsconfig (needed by frontend tsconfig extends)
-COPY tsconfig.json ./
+# Copy root tsconfig to parent directory (needed by app tsconfig extends)
+COPY tsconfig.json /app/tsconfig.json
 
-# Copy frontend package files
-COPY frontend/package.json frontend/bun.lockb* ./frontend/
-WORKDIR /app/frontend
+# Copy app package files
+COPY app/package.json app/bun.lockb* ./
 RUN bun install
 
-# Copy frontend source
-COPY frontend/ ./
+# Copy app source
+COPY app/ ./
 RUN bun run build
 
 # Production stage - run Nitro server
 FROM oven/bun:1 AS prod
-WORKDIR /app/frontend
+WORKDIR /app/app
 
 # Copy the built output from build stage
-COPY --from=build /app/frontend/.output /app/frontend/.output
+COPY --from=build /app/app/.output /app/app/.output
 
 # Copy drizzle migrations and config
-COPY --from=build /app/frontend/drizzle /app/frontend/drizzle
-COPY --from=build /app/frontend/drizzle.config.ts /app/frontend/drizzle.config.ts
-COPY --from=build /app/frontend/package.json /app/frontend/package.json
+COPY --from=build /app/app/drizzle /app/app/drizzle
+COPY --from=build /app/app/drizzle.config.ts /app/app/drizzle.config.ts
+COPY --from=build /app/app/package.json /app/app/package.json
 
 # Create data directory
-RUN mkdir -p /app/frontend/data
+RUN mkdir -p /app/app/data
 
 EXPOSE 80
 
