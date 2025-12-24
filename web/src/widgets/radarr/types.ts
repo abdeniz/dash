@@ -17,4 +17,5 @@ export type RadarrData = {
   missing: Movie[]
   queued: number
   movies: Movie[]
+  url: string
 }

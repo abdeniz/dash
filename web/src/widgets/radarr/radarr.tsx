@@ -19,7 +19,7 @@ export function Radarr(widget: WidgetProps) {
     return <Skeleton className="h-40 w-full rounded-4xl corner-squircle" />
   }
 
-  const { total, queued, missing, movies } = data
+  const { total, queued, missing, movies, url } = data
 
   return (
     <Card>
@@ -46,11 +46,11 @@ export function Radarr(widget: WidgetProps) {
 
             <HoverCard>
               <HoverCardTrigger>
-                <div className="flex items-end gap-0.5 cursor-pointer group">
+                <div className="flex items-end gap-0.5 cursor-pointer group/missing">
                   <p className="font-normal text-2xl tracking-tightest text-primary tabular-nums leading-tight">
                     {missing?.length}
                   </p>
-                  <p className="text-muted-foreground text-xl font-normal uppercase group-hover:underline">
+                  <p className="text-muted-foreground text-xl font-normal uppercase group-hover/missing:underline">
                     Missing
                   </p>
                 </div>
@@ -82,7 +82,9 @@ export function Radarr(widget: WidgetProps) {
           </div>
         </div>
 
-        {movies && movies.length > 0 && <MovieCarousel movies={movies} />}
+        {movies && movies.length > 0 && (
+          <MovieCarousel movies={movies} url={url} />
+        )}
       </CardContent>
     </Card>
   )

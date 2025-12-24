@@ -15,6 +15,8 @@ export class SonarrProvider implements IWidgetProvider<{
       apiKey: config.apiKey,
     });
 
-    return await getSonarrValue(sonarr, config.url, config.apiKey);
+    const result = await getSonarrValue(sonarr, config.url, config.apiKey);
+
+    return { ...result, url: config.url };
   }
 }

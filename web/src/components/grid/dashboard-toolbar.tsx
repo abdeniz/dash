@@ -38,7 +38,7 @@ export function DashboardToolbar() {
   if (!editable) return null
 
   return (
-    <div className="flex gap-2 p-3 border-b fixed top-0 left-0 w-full bg-background z-10 justify-between">
+    <div className="flex gap-2 items-center p-3 border-b fixed top-0 left-0 w-full bg-background z-10 justify-between">
       <AddWidgetDialog />
 
       <ButtonGroup>
@@ -50,6 +50,7 @@ export function DashboardToolbar() {
             }
           }}
           variant="outline"
+          size="sm"
         >
           Cancel <Kbd>Esc</Kbd>
         </Button>
@@ -61,6 +62,7 @@ export function DashboardToolbar() {
             toggleEditable()
           }}
           disabled={isPending || !isDirty()}
+          size="sm"
         >
           {isPending ? "Saving..." : "Save"} <Kbd>S</Kbd>
         </Button>
