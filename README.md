@@ -11,7 +11,7 @@
 ## Features
 
 - 🧩 Drag-and-drop, resizable widgets
-- ⚡ Real-time system and media data (CPU, memory, network, Radarr, Sonarr, uptime, etc.)
+- ⚡ Real-time system and media data (system info, \*rr suite etc.)
 - 🧑‍💻 Full-stack monorepo: Tanstack Start + ElysiaJS
 - 🧱 Provider pattern for easy widget extension
 - 🎨 Responsive, themeable UI (Tailwind CSS, shadcn)
