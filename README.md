@@ -60,12 +60,28 @@ bun run dev
 # App runs at http://localhost:3000
 ```
 
-## Extending Widgets
+## Adding or Syncing Widgets
 
-1. **Add a provider:** Implement `IWidgetProvider` in `server/src/providers/widgets/`
-2. **Register provider:** Add to `server/src/providers/index.ts`
-3. **Add frontend component:** Add React component to `web/src/widgets/` and update `componentMap` in `widget.tsx`
-4. **Update definitions:** Add to `widgets/src/definitions.ts`
+1. **Edit the registry:**
+   - Add or update widget definitions in [`widgets/registry.yaml`](widgets/registry.yaml) (type, label, category, layout, config, etc).
+
+2. **Sync widgets:**
+   - From the repo root, run:
+     ```bash
+     bun sync
+     ```
+   - (This runs the sync-widgets script for you.)
+   - This will:
+   - Generate or update provider stubs in `server/src/providers/widgets/`
+   - Regenerate the provider registry in `server/src/providers/index.ts`
+   - Generate or update frontend component stubs in `web/src/widgets/<type>/<type>.tsx`
+   - Regenerate widget definitions in `widgets/src/definitions.ts`
+   - All code and mappings stay in sync with your YAML source of truth.
+
+3. **Implement logic/UI:**
+   - Fill in the generated provider/component stubs as needed for your widget's functionality.
+
+**Tip:** The sync script uses [chalk](https://www.npmjs.com/package/chalk) for styled output and will warn you about missing files or successful generations.
 
 ## License
 
