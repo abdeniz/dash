@@ -15,6 +15,7 @@
 - 🧑‍💻 Full-stack monorepo: Tanstack Start + ElysiaJS
 - 🧱 Provider pattern for easy widget extension
 - 🎨 Responsive, themeable UI (Tailwind CSS, shadcn)
+- 🛠️ One-command widget sync: `bun sync` auto-generates files and updates registries from a single extendable YAML source
 
 ## Architecture
 
