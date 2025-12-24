@@ -24,10 +24,10 @@ const serverRegistryPath = path.join(
   "server",
   "src",
   "providers",
-  "index.ts",
+  "index.gen.ts",
 );
 const frontendWidgetsDir = path.join(root, "frontend", "src", "widgets");
-const definitionsPath = path.join(widgetsDir, "src", "definitions.ts");
+const definitionsPath = path.join(widgetsDir, "src", "definitions.gen.ts");
 const registryYamlPath = path.join(widgetsDir, "registry.yaml");
 
 async function fileExists(p: string) {
