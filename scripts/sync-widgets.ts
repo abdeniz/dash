@@ -10,32 +10,26 @@ import yaml from "js-yaml";
 
 const __dirname = import.meta.dirname || process.cwd();
 
-const root = path.resolve(__dirname);
-const widgetsDir = path.join(root, "widgets");
+const root = path.resolve(__dirname, "..");
+const appDir = path.join(root, "app");
 const serverProvidersDir = path.join(
-  root,
-  "server",
+  appDir,
   "src",
+  "server",
   "providers",
   "widgets",
 );
 const serverRegistryPath = path.join(
-  root,
-  "server",
+  appDir,
   "src",
+  "server",
   "providers",
   "index.gen.ts",
 );
-const frontendWidgetsDir = path.join(root, "frontend", "src", "widgets");
-const frontendWidgetsGenPath = path.join(
-  root,
-  "frontend",
-  "src",
-  "widgets",
-  "widgets.gen.ts",
-);
-const definitionsPath = path.join(widgetsDir, "src", "definitions.gen.ts");
-const registryYamlPath = path.join(widgetsDir, "registry.yaml");
+const widgetsDir = path.join(appDir, "src", "widgets");
+const widgetsGenPath = path.join(widgetsDir, "widgets.gen.ts");
+const definitionsPath = path.join(widgetsDir, "definitions.gen.ts");
+const registryYamlPath = path.join(root, "widget-registry.yaml");
 
 async function fileExists(p: string) {
   try {
@@ -55,33 +49,33 @@ async function main() {
   const providerImports = widgets
     .map(
       (w: any) =>
-        `import { ${capitalize(w.type)}Provider } from "./widgets/${capitalize(w.type)}Provider";`,
+        `import { ${capitalize(w.type)}Provider } from "./widgets/${capitalize(w.type)}Provider"`,
     )
     .join("\n");
-  const iwpImport =
-    'import { IWidgetProvider } from "./widgets/IWidgetProvider";';
 
   const providersObj = widgets
     .map((w: any) => `  ${w.type}: ${capitalize(w.type)}Provider,`)
     .join("\n");
 
   const providersFile = `${providerImports}
-${iwpImport}
+import type { IWidgetProvider } from "./widgets/IWidgetProvider"
 
 const providers: Record<string, new () => IWidgetProvider> = {
 ${providersObj}
-};
+}
 
-export default providers;
+export default providers
 `;
 
   await writeFile(serverRegistryPath, providersFile);
   console.log(
-    chalk.greenBright("[AUTO] Synced providers/index.ts from registry.yaml"),
+    chalk.greenBright(
+      "[AUTO] Synced app/src/server/providers/index.gen.ts from widget-registry.yaml",
+    ),
   );
 
-  // 2. Generate frontend widgets.gen.ts
-  const frontendImports = widgets
+  // 2. Generate widgets.gen.ts
+  const widgetImports = widgets
     .map(
       (w: any) =>
         `import { ${capitalize(w.type)} } from "./${w.type}/${w.type}"`,
@@ -92,18 +86,18 @@ export default providers;
     .map((w: any) => `  ${w.type}: ${capitalize(w.type)},`)
     .join("\n");
 
-  const frontendWidgetsFile = `import { WidgetType } from "@widgets/*"
-${frontendImports}
+  const widgetsFile = `${widgetImports}
+import type { WidgetType } from "./definitions.gen"
 
 export const widgets: Record<WidgetType, React.ComponentType<any>> = {
 ${widgetsObj}
 }
 `;
 
-  await writeFile(frontendWidgetsGenPath, frontendWidgetsFile);
+  await writeFile(widgetsGenPath, widgetsFile);
   console.log(
     chalk.greenBright(
-      "[AUTO] Synced frontend/src/widgets/widgets.gen.ts from registry.yaml",
+      "[AUTO] Synced app/src/widgets/widgets.gen.ts from widget-registry.yaml",
     ),
   );
 
@@ -121,12 +115,12 @@ ${widgetsObj}
         chalk.yellow(`[WARN] Provider file missing: ${providerFile}`),
       );
       // Autogenerate provider stub
-      const providerStub = `import { IWidgetProvider } from "./IWidgetProvider";
+      const providerStub = `import type { IWidgetProvider } from "./IWidgetProvider"
 
 export class ${capitalize(type)}Provider implements IWidgetProvider {
   async getValue(config: any): Promise<any> {
     // TODO: Implement ${capitalize(type)} API integration
-    return { message: "${capitalize(type)} data not implemented yet" };
+    return { message: "${capitalize(type)} data not implemented yet", config }
   }
 }
 `;
@@ -134,7 +128,7 @@ export class ${capitalize(type)}Provider implements IWidgetProvider {
       console.log(chalk.green(`[AUTO] Created provider stub: ${providerFile}`));
     }
     // Component file
-    const componentDir = path.join(frontendWidgetsDir, type);
+    const componentDir = path.join(widgetsDir, type);
     const componentFile = path.join(componentDir, `${type}.tsx`);
     const componentExists = await fileExists(componentFile);
     if (!componentExists) {
@@ -190,17 +184,19 @@ import { WidgetProps } from "../types"
         return `  ${w.type}: {\n    type: "${w.type}",\n    label: "${w.label}",\n    category: "${w.category}",\n    layout: ${toTsObjectLiteral(w.layout)},\n    ${configStr}\n  },`;
       })
       .join("\n\n");
-    const footer = `\n} as const;\n\nexport type WidgetType = keyof typeof definitions;\n`;
+    const footer = `\n} as const\n\nexport type WidgetType = keyof typeof definitions\n`;
     const newDefinitions = header + defs + footer;
     await writeFile(definitionsPath, newDefinitions);
-    console.log(chalk.cyan(`[AUTO] Synced ${widget.label} from registry.yaml`));
+    console.log(
+      chalk.cyan(`[AUTO] Synced ${widget.label} from widget-registry.yaml`),
+    );
     // Definitions registry
     const definitionsText = await readFile(definitionsPath, "utf8");
     // Check if already present
     const alreadyDefined = new RegExp(`\\b${type}: \\{`).test(definitionsText);
     if (!alreadyDefined) {
-      // Find where to insert (before closing } as const;)
-      const insertPos = definitionsText.lastIndexOf("} as const;");
+      // Find where to insert (before closing } as const)
+      const insertPos = definitionsText.lastIndexOf("} as const");
       if (insertPos === -1) {
         console.log(
           chalk.red(

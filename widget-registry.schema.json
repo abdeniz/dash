@@ -10,24 +10,13 @@
         "required": ["type", "label", "category", "layout", "config"],
         "properties": {
           "type": {
-            "type": "string",
-            "description": "Widget type identifier",
-            "enum": [
-              "cpu",
-              "memory",
-              "network",
-              "uptime",
-              "radarr",
-              "sonarr",
-              "jellyfin"
-            ]
+            "type": "string"
           },
           "label": {
             "type": "string"
           },
           "category": {
-            "type": "string",
-            "enum": ["system", "media", "custom"]
+            "type": "string"
           },
           "layout": {
             "type": "object",

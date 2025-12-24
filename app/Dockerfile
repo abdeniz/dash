@@ -17,12 +17,6 @@ WORKDIR /app
 # Copy root tsconfig (needed by frontend tsconfig extends)
 COPY tsconfig.json ./
 
-# Copy widgets directory (referenced by frontend tsconfig paths)
-COPY widgets/ ./widgets/
-
-# Copy server directory (referenced by frontend tsconfig paths for Eden client)
-COPY server/ ./server/
-
 # Copy frontend package files
 COPY frontend/package.json frontend/bun.lockb* ./frontend/
 WORKDIR /app/frontend
