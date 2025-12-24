@@ -23,17 +23,7 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"], // keep frontend alias
-      "@server/*": ["../server/*"], // import server types
-      "@widgets/*": ["../widgets/src"]
+      "@/*": ["./src/*"] // keep frontend alias
     }
-  },
-  "references": [
-    {
-      "path": "../widgets"
-    },
-    {
-      "path": "../server"
-    }
-  ]
+  }
 }

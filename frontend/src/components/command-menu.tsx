@@ -1,5 +1,6 @@
 import { PaintRollerIcon, PenIcon, PlusSquareIcon } from "@phosphor-icons/react"
 import React from "react"
+import { useHotkeys } from "react-hotkeys-hook"
 import {
   Command,
   CommandDialog,
@@ -10,7 +11,6 @@ import {
 } from "./ui/command"
 import { useTheme } from "@/providers/theme-provider"
 import { useDashboardStore } from "@/stores/dashboard-store"
-import { useHotkeys } from "react-hotkeys-hook"
 
 export function CommandMenu() {
   const [open, setOpen] = React.useState(false)

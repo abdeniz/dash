@@ -1,10 +1,10 @@
-import { Carousel, CarouselContent } from "@/components/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { MovieCard } from "./movie-card"
-import { Movie } from "./types"
+import type { Movie } from "./types"
+import { Carousel, CarouselContent } from "@/components/ui/carousel"
 
 type MovieCarouselProps = {
-  movies: Movie[]
+  movies: Array<Movie>
   url: string
 }
 

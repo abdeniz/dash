@@ -1,13 +1,13 @@
-import { type LayoutItem } from "react-grid-layout"
 import { create } from "zustand"
+import type { LayoutItem } from "react-grid-layout"
 
 type DashboardState = {
   editable: boolean
   toggleEditable: () => void
-  layout: LayoutItem[]
-  originalLayout: LayoutItem[] | null
+  layout: Array<LayoutItem>
+  originalLayout: Array<LayoutItem> | null
 
-  setLayout: (newLayout: LayoutItem[]) => void
+  setLayout: (newLayout: Array<LayoutItem>) => void
 
   isDirty: () => boolean
 
@@ -27,7 +27,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   layout: [],
   originalLayout: null,
 
-  setLayout: (newLayout: LayoutItem[]) => {
+  setLayout: (newLayout: Array<LayoutItem>) => {
     set((state) => ({
       originalLayout:
         state.originalLayout === null ? newLayout : state.originalLayout,

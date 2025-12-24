@@ -1,8 +1,8 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
 import { UptimeDisplay } from "./uptime-display"
 import { useUptime } from "./use-uptime"
-import { WidgetProps } from "../types"
+import type { WidgetProps } from "../types"
+import { Card, CardContent } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export function Uptime(widget: WidgetProps) {
   const { uptime, isLoading } = useUptime(widget)

@@ -1,6 +1,8 @@
 import { Command as CommandPrimitive } from "cmdk"
 import * as React from "react"
 
+import { CheckIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
+import { Kbd } from "./kbd"
 import {
   Dialog,
   DialogContent,
@@ -10,8 +12,6 @@ import {
 } from "@/components/ui/dialog"
 import { InputGroup, InputGroupAddon } from "@/components/ui/input-group"
 import { cn } from "@/lib/utils"
-import { CheckIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
-import { Kbd } from "./kbd"
 
 function Command({
   className,

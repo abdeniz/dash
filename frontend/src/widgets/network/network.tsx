@@ -1,11 +1,11 @@
+import { ArrowDownIcon, ArrowUpIcon } from "@phosphor-icons/react"
+import { NetworkGlobe } from "./network-globe"
+import type { WidgetProps } from "../types"
 import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useWidgetData } from "@/hooks/use-widget-data"
 import { bytesToMegabytes } from "@/lib/utils"
 import { useTheme } from "@/providers/theme-provider"
-import { ArrowDownIcon, ArrowUpIcon } from "@phosphor-icons/react"
-import { NetworkGlobe } from "./network-globe"
-import { WidgetProps } from "../types"
 
 type NetworkData = {
   rx: number

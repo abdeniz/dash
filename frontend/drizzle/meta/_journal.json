@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1766436897325,
+      "tag": "0000_wandering_penance",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1766437395151,
+      "tag": "0001_burly_prodigy",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1766609085562,
+      "tag": "0002_charming_jasper_sitwell",
+      "breakpoints": true
+    }
+  ]
+}

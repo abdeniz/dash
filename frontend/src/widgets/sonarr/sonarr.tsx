@@ -1,3 +1,7 @@
+import { TelevisionIcon } from "@phosphor-icons/react"
+import { ShowCarousel } from "./show-carousel"
+import type { SonarrData } from "./types"
+import type { WidgetProps } from "../types"
 import { Card, CardContent } from "@/components/ui/card"
 
 import { Skeleton } from "@/components/ui/skeleton"
@@ -8,10 +12,6 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
 import { useWidgetData } from "@/hooks/use-widget-data"
-import { TelevisionIcon } from "@phosphor-icons/react"
-import { ShowCarousel } from "./show-carousel"
-import { SonarrData } from "./types"
-import { WidgetProps } from "../types"
 
 export function Sonarr(widget: WidgetProps) {
   const { data, isLoading } = useWidgetData<SonarrData>(widget)
@@ -28,7 +28,7 @@ export function Sonarr(widget: WidgetProps) {
         <div className="flex flex-col justify-between">
           <div className="flex flex-col">
             <div className="flex items-end gap-0.5">
-              <p className="font-normal text-2xl tracking-tightest text-[#00CCFF] tabular-nums leading-tight">
+              <p className="font-normal text-2xl tracking-tightest text-primary tabular-nums leading-tight">
                 {total}
               </p>
               <p className="text-muted-foreground text-xl font-normal uppercase">
@@ -37,7 +37,7 @@ export function Sonarr(widget: WidgetProps) {
             </div>
 
             <div className="flex items-end gap-0.5">
-              <p className="font-normal text-2xl tracking-tightest text-[#00CCFF] tabular-nums leading-tight">
+              <p className="font-normal text-2xl tracking-tightest text-primary tabular-nums leading-tight">
                 {queued}
               </p>
               <p className="text-muted-foreground text-xl font-normal uppercase">
@@ -48,7 +48,7 @@ export function Sonarr(widget: WidgetProps) {
             <HoverCard>
               <HoverCardTrigger>
                 <div className="flex items-end gap-0.5 cursor-pointer group/missing">
-                  <p className="font-normal text-2xl tracking-tightest text-[#00CCFF] tabular-nums leading-tight">
+                  <p className="font-normal text-2xl tracking-tightest text-primary tabular-nums leading-tight">
                     {missing?.reduce(
                       (sum, item) => sum + item.missingEpisodes,
                       0,
@@ -77,7 +77,7 @@ export function Sonarr(widget: WidgetProps) {
           <div className="flex items-center gap-1">
             <TelevisionIcon
               weight="duotone"
-              className="text-[#00CCFF]"
+              className="text-primary"
               size={20}
             />
 

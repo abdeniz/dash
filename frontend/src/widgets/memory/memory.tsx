@@ -1,9 +1,9 @@
+import type { WidgetProps } from "../types"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useWidgetData } from "@/hooks/use-widget-data"
 import { megabytesToGigabytes } from "@/lib/utils"
-import { WidgetProps } from "../types"
 
 type MemoryData = {
   total: number

@@ -1,14 +1,14 @@
+import Autoplay from "embla-carousel-autoplay"
+import type { Show } from "./types"
 import { Card, CardContent } from "@/components/ui/card"
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel"
-import Autoplay from "embla-carousel-autoplay"
-import { Show } from "./types"
 
 type ShowCarouselProps = {
-  shows: Show[]
+  shows: Array<Show>
   url: string
 }
 

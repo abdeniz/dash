@@ -1,6 +1,7 @@
-import createGlobe, { COBEOptions } from "cobe"
+import createGlobe from "cobe"
 import { useMotionValue, useSpring } from "motion/react"
 import { useEffect, useRef } from "react"
+import type { COBEOptions } from "cobe"
 
 import { cn } from "@/lib/utils"
 

@@ -1,15 +1,17 @@
-import { app } from "@/api/client"
-import { Widget } from "@/widgets/widget"
 import { useQuery } from "@tanstack/react-query"
-import { type WidgetType, definitions } from "@widgets/index"
-import ReactGridLayout, { Layout, useContainerWidth } from "react-grid-layout"
+import ReactGridLayout, { useContainerWidth } from "react-grid-layout"
 import { fastVerticalCompactor } from "./compactor"
+import type { Layout } from "react-grid-layout"
+import type { WidgetType } from "@/widgets/definitions.gen"
+import { Widget } from "@/widgets/widget"
 import { useDashboardStore } from "@/stores/dashboard-store"
+import { getWidgets } from "@/server/widgets"
+import { definitions } from "@/widgets/definitions.gen"
 
 export function Grid() {
   const { data } = useQuery({
     queryKey: ["widgets"],
-    queryFn: async () => await app.widgets.get(),
+    queryFn: async () => getWidgets(),
   })
   const { width, containerRef, mounted } = useContainerWidth()
   const layout = useDashboardStore((state) => state.layout)
@@ -36,7 +38,7 @@ export function Grid() {
             enabled: editable,
           }}
         >
-          {data?.data?.map((widget) => {
+          {data?.map((widget) => {
             const maxes = definitions[widget.typeId as WidgetType].layout
 
             return (

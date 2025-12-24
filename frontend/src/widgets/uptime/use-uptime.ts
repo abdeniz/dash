@@ -1,6 +1,6 @@
-import { useWidgetData } from "@/hooks/use-widget-data"
 import { useEffect, useState } from "react"
-import { WidgetProps } from "../types"
+import type { WidgetProps } from "../types"
+import { useWidgetData } from "@/hooks/use-widget-data"
 
 type Uptime = {
   h: number

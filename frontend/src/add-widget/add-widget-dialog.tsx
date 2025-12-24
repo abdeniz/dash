@@ -1,4 +1,7 @@
-import { app } from "@/api/client"
+import { PlusSquareIcon } from "@phosphor-icons/react"
+import { useMutation } from "@tanstack/react-query"
+import React from "react"
+import type { WidgetType } from "@/widgets/definitions.gen"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -21,11 +24,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { queryClient } from "@/routes/__root"
+import { createWidget } from "@/server/widgets"
 import { useDashboardStore } from "@/stores/dashboard-store"
-import { PlusSquareIcon } from "@phosphor-icons/react"
-import { useMutation } from "@tanstack/react-query"
-import { type WidgetType, definitions } from "@widgets/index"
-import React from "react"
+import { definitions } from "@/widgets/definitions.gen"
+
 export function AddWidgetDialog() {
   const [type, setType] = React.useState<WidgetType>("cpu")
   const open = useDashboardStore((state) => state.addWidgetOpen)
@@ -34,11 +36,13 @@ export function AddWidgetDialog() {
   const { mutate } = useMutation({
     mutationKey: ["add-widget"],
     mutationFn: (config: unknown) =>
-      app.widgets.post({
-        typeId: type,
-        width: definitions[type].layout.minW,
-        height: definitions[type].layout.minH,
-        config,
+      createWidget({
+        data: {
+          typeId: type,
+          width: definitions[type].layout.minW,
+          height: definitions[type].layout.minH,
+          config,
+        },
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["widgets"] })

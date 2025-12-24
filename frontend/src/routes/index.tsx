@@ -1,7 +1,7 @@
+import { createFileRoute } from "@tanstack/react-router"
 import { Grid } from "@/components/grid/grid"
 import { cn } from "@/lib/utils"
 import { useDashboardStore } from "@/stores/dashboard-store"
-import { createFileRoute } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/")({
   component: App,

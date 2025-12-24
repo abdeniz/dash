@@ -1,9 +1,9 @@
+import type { WidgetProps } from "../types"
 import { Card, CardContent } from "@/components/ui/card"
 import { FlickeringGrid } from "@/components/ui/flickering-grid"
 import { Progress } from "@/components/ui/progress"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useWidgetData } from "@/hooks/use-widget-data"
-import { WidgetProps } from "../types"
 
 export function Cpu(widget: WidgetProps) {
   const { data, isLoading } = useWidgetData<{ avg: number }>(widget)

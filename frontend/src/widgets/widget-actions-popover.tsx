@@ -1,11 +1,11 @@
+import { useState } from "react"
+import { WidgetActions } from "./widget-actions"
+import type { WidgetProps } from "./types"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { useState } from "react"
-import { WidgetActions } from "./widget-actions"
-import { WidgetProps } from "./types"
 import { useDashboardStore } from "@/stores/dashboard-store"
 
 type WidgetActionsPopoverProps = {

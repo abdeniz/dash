@@ -1,11 +1,11 @@
-import { useDashboardStore } from "@/stores/dashboard-store"
+import { useHotkeys } from "react-hotkeys-hook"
 import { Button } from "../ui/button"
+import { Kbd } from "../ui/kbd"
+import { ButtonGroup } from "../ui/button-group"
+import { useDashboardStore } from "@/stores/dashboard-store"
 import { AddWidgetDialog } from "@/add-widget/add-widget-dialog"
 import { useSaveLayout } from "@/hooks/use-save-layout"
-import { Kbd } from "../ui/kbd"
-import { useHotkeys } from "react-hotkeys-hook"
 import { queryClient } from "@/routes/__root"
-import { ButtonGroup } from "../ui/button-group"
 
 export function DashboardToolbar() {
   const { isPending, mutateAsync } = useSaveLayout()

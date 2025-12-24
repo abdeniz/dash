@@ -14,8 +14,8 @@ export type Movie = {
 
 export type RadarrData = {
   total: number
-  missing: Movie[]
+  missing: Array<Movie>
   queued: number
-  movies: Movie[]
+  movies: Array<Movie>
   url: string
 }

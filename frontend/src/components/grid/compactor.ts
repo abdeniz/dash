@@ -26,12 +26,8 @@
  * ```
  */
 
-import {
-  cloneLayout,
-  Compactor,
-  Layout,
-  LayoutItem,
-} from "react-grid-layout/react"
+import { cloneLayout } from "react-grid-layout/react"
+import type { Compactor, Layout, LayoutItem } from "react-grid-layout/react"
 
 type Mutable<T> = {
   -readonly [P in keyof T]: T[P]
@@ -66,7 +62,7 @@ function collides(l1: LayoutItem, l2: LayoutItem): boolean {
  * @param allowOverlap - Whether to allow overlapping items
  */
 function compactVerticalFast(
-  layout: LayoutItem[],
+  layout: Array<LayoutItem>,
   cols: number,
   allowOverlap: boolean,
 ): void {
@@ -86,7 +82,7 @@ function compactVerticalFast(
   })
 
   // "Rising tide" - tracks the highest blocked row per column
-  const tide: number[] = new Array(cols).fill(0)
+  const tide: Array<number> = new Array(cols).fill(0)
 
   // Collect static items for collision checking
   const staticItems = layout.filter((item) => item.static)
@@ -176,7 +172,7 @@ export const fastVerticalCompactor: Compactor = {
 
   compact(layout: Layout, cols: number): Layout {
     // Clone the layout since we modify in place
-    const out = cloneLayout(layout) as LayoutItem[]
+    const out = cloneLayout(layout)
     compactVerticalFast(out, cols, false)
     return out
   },
@@ -189,7 +185,7 @@ export const fastVerticalCompactor: Compactor = {
     _cols: number,
   ): Layout {
     // Simple move - compact() will be called after
-    const newLayout = cloneLayout(layout) as Mutable<LayoutItem>[]
+    const newLayout = cloneLayout(layout) as Array<Mutable<LayoutItem>>
     const movedItem = newLayout.find((l) => l.i === item.i)
     if (movedItem) {
       movedItem.x = x

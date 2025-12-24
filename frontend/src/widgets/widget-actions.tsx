@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button"
 import { PenIcon, XIcon } from "@phosphor-icons/react"
-import { WidgetProps } from "./types"
 import { useMutation } from "@tanstack/react-query"
-import { app } from "@/api/client"
 import { toast } from "sonner"
+import type { WidgetProps } from "./types"
+import { Button } from "@/components/ui/button"
 import { queryClient } from "@/routes/__root"
+import { deleteWidget } from "@/server/widgets"
 
 type WidgetActionsProps = {
   widget: WidgetProps["widget"]
@@ -13,7 +13,7 @@ type WidgetActionsProps = {
 export function WidgetActions({ widget }: WidgetActionsProps) {
   const { mutateAsync: deleteAsync } = useMutation({
     mutationKey: ["delete-widget"],
-    mutationFn: () => app.widgets({ id: widget.id }).delete(),
+    mutationFn: () => deleteWidget({ data: widget.id }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["widgets"] })
     },

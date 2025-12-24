@@ -1,8 +1,8 @@
-import { Card } from "@/components/ui/card"
-import { WidgetType } from "@widgets/*"
-import { WidgetProps } from "./types"
 import { WidgetActionsPopover } from "./widget-actions-popover"
 import { widgets } from "./widgets.gen"
+import type { WidgetProps } from "./types"
+import type { WidgetType } from "./definitions.gen"
+import { Card } from "@/components/ui/card"
 
 export const Widget = ({
   widget: { id, pollInterval, typeId },

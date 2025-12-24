@@ -1,7 +1,7 @@
-import { Globe } from "@/components/ui/globe"
-import { Theme } from "@/providers/theme-provider"
-import { COBEOptions } from "cobe"
 import { memo } from "react"
+import type { COBEOptions } from "cobe"
+import type { Theme } from "@/providers/theme-provider"
+import { Globe } from "@/components/ui/globe"
 
 const HELSINKI_LOCATION: [number, number] = [60.1695, 24.9354]
 

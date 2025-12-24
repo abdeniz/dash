@@ -5,6 +5,12 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import "react-grid-layout/css/styles.css"
 import "react-resizable/css/styles.css"
 
+import appCss from "../styles.css?url"
+import { DashboardToolbar } from "@/components/grid/dashboard-toolbar"
+import { Toaster } from "@/components/ui/sonner"
+import { HotkeysProvider } from "@/providers/hotkeys-provider"
+import { ThemeProvider } from "@/providers/theme-provider"
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -12,12 +18,6 @@ export const queryClient = new QueryClient({
     },
   },
 })
-
-import { DashboardToolbar } from "@/components/grid/dashboard-toolbar"
-import { Toaster } from "@/components/ui/sonner"
-import { HotkeysProvider } from "@/providers/hotkeys-provider"
-import { ThemeProvider } from "@/providers/theme-provider"
-import appCss from "../styles.css?url"
 
 export const Route = createRootRoute({
   head: () => ({

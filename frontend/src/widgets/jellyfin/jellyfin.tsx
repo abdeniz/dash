@@ -1,12 +1,11 @@
+import { PlayIcon } from "@phosphor-icons/react"
+import type { WidgetProps } from "../types"
 import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useWidgetData } from "@/hooks/use-widget-data"
-import { PlayIcon } from "@phosphor-icons/react"
-import { JellyfinData } from "@server/src/providers/clients/jellyfin"
-import { WidgetProps } from "../types"
 
 export function Jellyfin({ widget }: WidgetProps) {
-  const { data, isLoading } = useWidgetData<JellyfinData>({ widget })
+  const { data, isLoading } = useWidgetData<any>({ widget })
 
   if (isLoading || !data) {
     return <Skeleton className="h-full w-full rounded-4xl corner-squircle" />

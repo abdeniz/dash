@@ -21,8 +21,8 @@ type Missing = {
 
 export type SonarrData = {
   total: number
-  missing: Missing[]
+  missing: Array<Missing>
   queued: number
-  shows: Show[]
+  shows: Array<Show>
   url: string
 }

@@ -1,6 +1,6 @@
-import { useDashboardStore } from "@/stores/dashboard-store"
 import { useHotkeys } from "react-hotkeys-hook"
 import { useTheme } from "./theme-provider"
+import { useDashboardStore } from "@/stores/dashboard-store"
 
 export function HotkeysProvider() {
   const toggleEditable = useDashboardStore((s) => s.toggleEditable)

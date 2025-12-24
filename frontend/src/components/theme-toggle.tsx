@@ -1,5 +1,5 @@
-import { useTheme } from "@/providers/theme-provider"
 import { MoonIcon, SunIcon } from "@phosphor-icons/react"
+import { useTheme } from "@/providers/theme-provider"
 import {
   DropdownMenu,
   DropdownMenuContent,
