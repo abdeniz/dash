@@ -23,7 +23,7 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"], // keep web alias
+      "@/*": ["./src/*"], // keep frontend alias
       "@server/*": ["../server/*"], // import server types
       "@widgets/*": ["../widgets/src"]
     }

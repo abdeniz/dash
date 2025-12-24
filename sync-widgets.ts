@@ -26,10 +26,8 @@ const serverRegistryPath = path.join(
   "providers",
   "index.ts",
 );
-const webWidgetsDir = path.join(root, "web", "src", "widgets");
-const webWidgetMapPath = path.join(webWidgetsDir, "widget.tsx");
+const frontendWidgetsDir = path.join(root, "frontend", "src", "widgets");
 const definitionsPath = path.join(widgetsDir, "src", "definitions.ts");
-const definitionsText = await readFile(definitionsPath, "utf8");
 const registryYamlPath = path.join(widgetsDir, "registry.yaml");
 
 async function fileExists(p: string) {
@@ -102,7 +100,7 @@ export class ${capitalize(type)}Provider implements IWidgetProvider {
       console.log(chalk.green(`[AUTO] Created provider stub: ${providerFile}`));
     }
     // Component file
-    const componentDir = path.join(webWidgetsDir, type);
+    const componentDir = path.join(frontendWidgetsDir, type);
     const componentFile = path.join(componentDir, `${type}.tsx`);
     const componentExists = await fileExists(componentFile);
     if (!componentExists) {
