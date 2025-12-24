@@ -1,5 +1,5 @@
 {
-  "name": "@dash/frontend",
+  "name": "@dash/app",
   "private": true,
   "type": "module",
   "scripts": {

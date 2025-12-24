@@ -39,9 +39,17 @@ WORKDIR /app/frontend
 # Copy the built output from build stage
 COPY --from=build /app/frontend/.output /app/frontend/.output
 
+# Copy drizzle migrations and config
+COPY --from=build /app/frontend/drizzle /app/frontend/drizzle
+COPY --from=build /app/frontend/drizzle.config.ts /app/frontend/drizzle.config.ts
+COPY --from=build /app/frontend/package.json /app/frontend/package.json
+
+# Create data directory
+RUN mkdir -p /app/frontend/data
+
 EXPOSE 80
 
-# Run the Nitro server
+# Run migrations and start server
 ENV PORT=80
 ENV HOST=0.0.0.0
-CMD ["bun", ".output/server/index.mjs"]
+CMD ["sh", "-c", "bunx drizzle-kit migrate && bun .output/server/index.mjs"]

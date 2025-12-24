@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "paths": {
-      "@server/*": ["server/*"],
-      "@widgets/*": ["widgets/*"]
-    },
     "declaration": true,
     "emitDeclarationOnly": false,
     "declarationMap": true,
@@ -14,9 +10,5 @@
     "strict": true
   },
   "files": [],
-  "references": [
-    { "path": "./widgets" },
-    { "path": "./frontend" },
-    { "path": "./server" }
-  ]
+  "references": [{ "path": "./app" }]
 }

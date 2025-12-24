@@ -1,40 +1,22 @@
 services:
-  server:
+  app:
     build:
-      context: ./server
-      dockerfile: Dockerfile
-    container_name: dash-server-dev
-    ports:
-      - "3003:3003"
-    volumes:
-      - ./server/src:/app/src
-      - ./server/drizzle:/app/drizzle
-      - ./server/data:/app/data
-      - ./server/.env:/app/.env
-    environment:
-      - NODE_ENV=development
-      - PORT=3003
-      - HOST=0.0.0.0
-      - DATABASE_PATH=/app/data/dash.db
-    networks:
-      - dash-network
-    restart: unless-stopped
-
-  frontend:
-    build:
-      context: ./frontend
+      context: ./app
       dockerfile: Dockerfile
       target: dev
-    container_name: dash-frontend-dev
+    container_name: dash-app-dev
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend/src:/app/src
-      - ./frontend/public:/app/public
+      - ./app/src:/app/src
+      - ./app/public:/app/public
+      - ./app/data:/app/data
+      - ./app/drizzle:/app/drizzle
     environment:
-      - VITE_API_URL=http://server:3003
-    depends_on:
-      - server
+      - NODE_ENV=development
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_FILE_NAME=/app/data/dash.db
     networks:
       - dash-network
     restart: unless-stopped

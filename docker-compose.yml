@@ -1,35 +1,19 @@
 services:
-  server:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-    container_name: dash-server
-    ports:
-      - "3003:3003"
-    volumes:
-      - dash-data:/app/data
-      - ./server/.env:/app/.env
-    environment:
-      - NODE_ENV=production
-      - PORT=3003
-      - HOST=0.0.0.0
-      - DB_FILE_NAME=/app/data/dash.db
-    networks:
-      - dash-network
-    restart: unless-stopped
-
-  frontend:
+  app:
     build:
       context: .
-      dockerfile: ./frontend/Dockerfile
+      dockerfile: ./app/Dockerfile
       target: prod
-      args:
-        - VITE_API_URL=http://localhost:3003
-    container_name: dash-frontend
+    container_name: dash-app
     ports:
       - "80:80"
-    depends_on:
-      - server
+    volumes:
+      - dash-data:/app/app/data
+    environment:
+      - NODE_ENV=production
+      - PORT=80
+      - HOST=0.0.0.0
+      - DB_FILE_NAME=/app/app/data/dash.db
     networks:
       - dash-network
     restart: unless-stopped
