@@ -18,6 +18,9 @@ const config = defineConfig({
     tanstackStart(),
     viteReact(),
   ],
+  ssr: {
+    external: ["bun:sqlite"],
+  },
   server: {
     host: "0.0.0.0",
     port: 3000,
