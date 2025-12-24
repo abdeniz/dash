@@ -5,13 +5,14 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
-import { Show } from "./sonarr"
+import { Show } from "./types"
 
 type ShowCarouselProps = {
   shows: Show[]
+  url: string
 }
 
-export function ShowCarousel({ shows }: ShowCarouselProps) {
+export function ShowCarousel({ shows, url }: ShowCarouselProps) {
   return (
     <Carousel
       opts={{
@@ -32,10 +33,10 @@ export function ShowCarousel({ shows }: ShowCarouselProps) {
             className="basis-1/2 md:basis-1/4 lg:basis-1/4"
           >
             <a
-              href={`${import.meta.env.VITE_SONARR_URL}/series/${show.titleSlug}`}
+              href={`${url}/series/${show.titleSlug}`}
               target="_blank"
               rel="noreferrer"
-              className="group"
+              className="group/show-card"
             >
               <Card className="py-0 rounded-xl! border-2">
                 <CardContent className="flex items-center justify-center h-full relative select-none">
@@ -47,7 +48,7 @@ export function ShowCarousel({ shows }: ShowCarouselProps) {
                     }
                     className="absolute top-0 left-0 w-full h-full object-cover"
                   />
-                  <div className="absolute bottom-0 left-0 w-full text-center overflow-hidden text-wrap px-1 pb-3 pt-6 leading-tight opacity-0 group-hover:opacity-100 font-medium transition-opacity bg-linear-to-b from-transparent to-background">
+                  <div className="absolute bottom-0 left-0 w-full text-center overflow-hidden text-wrap px-1 pb-3 pt-6 leading-tight opacity-0 group-hover/show-card:opacity-100 font-medium transition-opacity bg-linear-to-b from-transparent to-background">
                     {show.title} ({show.year})
                   </div>
                 </CardContent>

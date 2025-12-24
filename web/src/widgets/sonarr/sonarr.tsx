@@ -20,7 +20,7 @@ export function Sonarr(widget: WidgetProps) {
     return <Skeleton className="h-40 w-full rounded-4xl corner-squircle" />
   }
 
-  const { total, queued, missing, shows } = data
+  const { total, queued, missing, shows, url } = data
 
   return (
     <Card>
@@ -47,14 +47,14 @@ export function Sonarr(widget: WidgetProps) {
 
             <HoverCard>
               <HoverCardTrigger>
-                <div className="flex items-end gap-0.5 cursor-pointer group">
+                <div className="flex items-end gap-0.5 cursor-pointer group/missing">
                   <p className="font-normal text-2xl tracking-tightest text-primary tabular-nums leading-tight">
                     {missing?.reduce(
                       (sum, item) => sum + item.missingEpisodes,
                       0,
                     )}
                   </p>
-                  <p className="text-muted-foreground text-xl font-normal uppercase group-hover:underline">
+                  <p className="text-muted-foreground text-xl font-normal uppercase group-hover/missing:underline">
                     Missing
                   </p>
                 </div>
@@ -87,7 +87,7 @@ export function Sonarr(widget: WidgetProps) {
           </div>
         </div>
 
-        {shows && shows.length > 0 && <ShowCarousel shows={shows} />}
+        {shows && shows.length > 0 && <ShowCarousel shows={shows} url={url} />}
       </CardContent>
     </Card>
   )

@@ -102,7 +102,11 @@ export function AddWidgetDialog() {
                   value={type}
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue />
+                    <SelectValue>
+                      {(value: string) => (
+                        <span>{definitions[value as WidgetType].label}</span>
+                      )}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {Object.keys(definitions).map((key) => {
@@ -128,6 +132,7 @@ export function AddWidgetDialog() {
                           type={
                             field.secret ? "password" : field.type || "text"
                           }
+                          required={field.required}
                         />
                       </div>
                     ),

@@ -14,7 +14,7 @@ function App() {
     <main
       className={cn(
         "relative max-w-400 mx-auto p-3 md:p-6",
-        editable && "mt-12",
+        editable && "pt-14!",
       )}
     >
       <Grid />

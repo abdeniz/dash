@@ -15,6 +15,8 @@ export class RadarrProvider implements IWidgetProvider<{
       apiKey: config.apiKey,
     });
 
-    return await getRadarrValue(radarr);
+    const results = await getRadarrValue(radarr);
+
+    return { ...results, url: config.url };
   }
 }

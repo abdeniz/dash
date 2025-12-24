@@ -1,13 +1,14 @@
 import { Carousel, CarouselContent } from "@/components/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { MovieCard } from "./movie-card"
-import { Movie } from "./radarr"
+import { Movie } from "./types"
 
 type MovieCarouselProps = {
   movies: Movie[]
+  url: string
 }
 
-export function MovieCarousel({ movies }: MovieCarouselProps) {
+export function MovieCarousel({ movies, url }: MovieCarouselProps) {
   return (
     <Carousel
       opts={{
@@ -23,7 +24,7 @@ export function MovieCarousel({ movies }: MovieCarouselProps) {
     >
       <CarouselContent>
         {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+          <MovieCard key={movie.id} movie={movie} url={url} />
         ))}
       </CarouselContent>
     </Carousel>

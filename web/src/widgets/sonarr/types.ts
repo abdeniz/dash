@@ -24,4 +24,5 @@ export type SonarrData = {
   missing: Missing[]
   queued: number
   shows: Show[]
+  url: string
 }
