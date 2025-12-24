@@ -2,8 +2,8 @@ export type FieldType = "string" | "number";
 
 export type WidgetFieldDefinition = {
   type: FieldType;
-  required?: boolean;
-  secret?: boolean;
+  required: boolean;
+  secret: boolean;
   default?: string | number;
 };
 
@@ -19,7 +19,7 @@ export type WidgetDefinition = {
   label: string;
   category: string;
   layout: WidgetLayout;
-  configSchema?: Record<string, WidgetFieldDefinition>;
+  config?: Record<string, WidgetFieldDefinition>;
 };
 
 export const definitions = {
@@ -28,6 +28,7 @@ export const definitions = {
     label: "CPU",
     category: "system",
     layout: { minW: 1, minH: 2, maxW: 3, maxH: 3 },
+    config: {},
   },
 
   memory: {
@@ -35,6 +36,7 @@ export const definitions = {
     label: "Memory",
     category: "system",
     layout: { minW: 2, minH: 2, maxW: 3, maxH: 3 },
+    config: {},
   },
 
   network: {
@@ -42,13 +44,15 @@ export const definitions = {
     label: "Network",
     category: "system",
     layout: { minW: 3, minH: 2, maxW: 3, maxH: 3 },
+    config: {},
   },
 
   uptime: {
     type: "uptime",
-    label: "System",
+    label: "Uptime",
     category: "system",
     layout: { minW: 3, minH: 2, maxW: 3, maxH: 3 },
+    config: {},
   },
 
   radarr: {
@@ -56,9 +60,19 @@ export const definitions = {
     label: "Radarr",
     category: "media",
     layout: { minW: 4, minH: 4, maxW: 9, maxH: 6 },
-    configSchema: {
-      url: { type: "string", required: true },
-      apiKey: { type: "string", required: true, secret: true },
+    config: {
+      url: {
+        type: "string",
+        required: true,
+        label: "URL",
+        secret: false,
+      },
+      apiKey: {
+        type: "string",
+        required: true,
+        secret: true,
+        label: "API Key",
+      },
     },
   },
 
@@ -67,9 +81,19 @@ export const definitions = {
     label: "Sonarr",
     category: "media",
     layout: { minW: 4, minH: 4, maxW: 9, maxH: 6 },
-    configSchema: {
-      url: { type: "string", required: true },
-      apiKey: { type: "string", required: true, secret: true },
+    config: {
+      url: {
+        type: "string",
+        required: true,
+        label: "URL",
+        secret: false,
+      },
+      apiKey: {
+        type: "string",
+        required: true,
+        secret: true,
+        label: "API Key",
+      },
     },
   },
 } as const;

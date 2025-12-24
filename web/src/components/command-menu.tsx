@@ -1,4 +1,4 @@
-import { PaintRollerIcon, PlusSquareIcon } from "@phosphor-icons/react"
+import { PaintRollerIcon, PenIcon, PlusSquareIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
   Command,
@@ -9,21 +9,23 @@ import {
   CommandList,
 } from "./ui/command"
 import { useTheme } from "@/providers/theme-provider"
+import { useDashboardStore } from "@/stores/dashboard-store"
+import { useHotkeys } from "react-hotkeys-hook"
 
 export function CommandMenu() {
   const [open, setOpen] = React.useState(false)
   const { theme, setTheme } = useTheme()
+  const toggleEditable = useDashboardStore((state) => state.toggleEditable)
+  const setAddWidgetOpen = useDashboardStore((state) => state.setAddWidgetOpen)
 
-  React.useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        setOpen((open) => !open)
-      }
-    }
-    document.addEventListener("keydown", down)
-    return () => document.removeEventListener("keydown", down)
-  }, [])
+  useHotkeys(
+    "meta+k,ctrl+k",
+    (e) => {
+      e.preventDefault()
+      setOpen((open) => !open)
+    },
+    [setOpen],
+  )
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
@@ -32,8 +34,21 @@ export function CommandMenu() {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
 
-          <CommandItem>
+          <CommandItem
+            onSelect={() => {
+              setOpen(false)
+              setAddWidgetOpen(true)
+            }}
+          >
             <PlusSquareIcon size={20} /> Add widget
+          </CommandItem>
+          <CommandItem
+            onSelect={() => {
+              toggleEditable()
+              setOpen(false)
+            }}
+          >
+            <PenIcon size={20} /> Toggle edit
           </CommandItem>
           <CommandItem
             onSelect={() =>
