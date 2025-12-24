@@ -27,6 +27,13 @@ const serverRegistryPath = path.join(
   "index.gen.ts",
 );
 const frontendWidgetsDir = path.join(root, "frontend", "src", "widgets");
+const frontendWidgetsGenPath = path.join(
+  root,
+  "frontend",
+  "src",
+  "widgets",
+  "widgets.gen.ts",
+);
 const definitionsPath = path.join(widgetsDir, "src", "definitions.gen.ts");
 const registryYamlPath = path.join(widgetsDir, "registry.yaml");
 
@@ -73,7 +80,34 @@ export default providers;
     chalk.greenBright("[AUTO] Synced providers/index.ts from registry.yaml"),
   );
 
-  // 2. Check for each widget type
+  // 2. Generate frontend widgets.gen.ts
+  const frontendImports = widgets
+    .map(
+      (w: any) =>
+        `import { ${capitalize(w.type)} } from "./${w.type}/${w.type}"`,
+    )
+    .join("\n");
+
+  const widgetsObj = widgets
+    .map((w: any) => `  ${w.type}: ${capitalize(w.type)},`)
+    .join("\n");
+
+  const frontendWidgetsFile = `import { WidgetType } from "@widgets/*"
+${frontendImports}
+
+export const widgets: Record<WidgetType, React.ComponentType<any>> = {
+${widgetsObj}
+}
+`;
+
+  await writeFile(frontendWidgetsGenPath, frontendWidgetsFile);
+  console.log(
+    chalk.greenBright(
+      "[AUTO] Synced frontend/src/widgets/widgets.gen.ts from registry.yaml",
+    ),
+  );
+
+  // 3. Check for each widget type
   for (const widget of widgets) {
     const type = widget.type;
     // Provider file
@@ -109,17 +143,36 @@ export class ${capitalize(type)}Provider implements IWidgetProvider {
       );
       // Autogenerate component stub
       await fsMkdirIfNotExists(componentDir);
-      const componentStub = `export const ${capitalize(type)} = ({ widget }: any) => {
-  // TODO: Implement ${capitalize(type)} widget UI
-  return (
-    <div className="p-4">
-      <h2 className="font-bold">${capitalize(type)} Widget</h2>
-      <p>Widget ID: {widget?.id}</p>
-      <p>${capitalize(type)} integration not implemented yet.</p>
-    </div>
-  );
-};
-`;
+      const componentStub = `import {
+      Card,
+      CardContent,
+      CardDescription,
+      CardHeader,
+      CardTitle,
+    } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
+import { useWidgetData } from "@/hooks/use-widget-data"
+import { WidgetProps } from "../types"
+
+    export function ${capitalize(type)}({ widget }: WidgetProps) {
+      const { data, isLoading } = useWidgetData<any>({ widget })
+
+      if (isLoading || !data) {
+        return <Skeleton className="h-full w-full rounded-4xl corner-squircle" />
+      }
+
+      // TODO: Implement ${capitalize(type)} widget UI
+      return (
+        <Card>
+      <CardHeader>
+        <CardTitle>${capitalize(type)} Widget</CardTitle>
+        <CardDescription>Widget ID: {widget.id}</CardDescription>
+      </CardHeader>
+      <CardContent>${capitalize(type)} widget not implemented yet.</CardContent>
+        </Card>
+      )
+    }
+    `;
       await writeFile(componentFile, componentStub);
       console.log(
         chalk.green(`[AUTO] Created component stub: ${componentFile}`),

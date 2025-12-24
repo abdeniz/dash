@@ -1,28 +1,14 @@
 import { Card } from "@/components/ui/card"
-import { CPU } from "./cpu/cpu"
-import { Memory } from "./memory/memory"
-import { Network } from "./network/network"
-import { Radarr } from "./radarr/radarr"
-import { Sonarr } from "./sonarr/sonarr"
-import { WidgetProps } from "./types"
-import { Uptime } from "./uptime/uptime"
-import { WidgetActionsPopover } from "./widget-actions-popover"
 import { WidgetType } from "@widgets/*"
-
-const componentMap: Record<WidgetType, React.ComponentType<any>> = {
-  cpu: CPU,
-  memory: Memory,
-  network: Network,
-  uptime: Uptime,
-  radarr: Radarr,
-  sonarr: Sonarr,
-}
+import { WidgetProps } from "./types"
+import { WidgetActionsPopover } from "./widget-actions-popover"
+import { widgets } from "./widgets.gen"
 
 export const Widget = ({
   widget: { id, pollInterval, typeId },
 }: WidgetProps) => {
   const getWidget = (typeId: WidgetType) => {
-    const Component = componentMap[typeId]
+    const Component = widgets[typeId]
 
     return Component ? (
       <Component widget={{ id, pollInterval, typeId }} />

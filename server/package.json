@@ -1,8 +1,9 @@
 {
   "name": "@dash/server",
-  "version": "1.0.50",
+  "version": "0.0.1",
   "module": "src/index.js",
   "dependencies": {
+    "@jellyfin/sdk": "^0.13.0",
     "@libsql/client": "^0.15.15",
     "better-sqlite3": "^12.5.0",
     "dotenv": "^17.2.3",

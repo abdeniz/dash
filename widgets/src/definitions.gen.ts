@@ -102,6 +102,32 @@ export const definitions = {
       },
     },
   },
+
+  jellyfin: {
+    type: "jellyfin",
+    label: "Jellyfin",
+    category: "media",
+    layout: {
+      minW: 4,
+      minH: 4,
+      maxW: 9,
+      maxH: 6,
+    },
+    config: {
+      url: {
+        type: "string",
+        required: true,
+        label: "URL",
+        secret: false,
+      },
+      apiKey: {
+        type: "string",
+        required: true,
+        secret: true,
+        label: "API Key",
+      },
+    },
+  },
 } as const;
 
 export type WidgetType = keyof typeof definitions;

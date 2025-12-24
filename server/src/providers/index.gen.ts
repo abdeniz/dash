@@ -4,6 +4,7 @@ import { NetworkProvider } from "./widgets/NetworkProvider";
 import { UptimeProvider } from "./widgets/UptimeProvider";
 import { RadarrProvider } from "./widgets/RadarrProvider";
 import { SonarrProvider } from "./widgets/SonarrProvider";
+import { JellyfinProvider } from "./widgets/JellyfinProvider";
 import { IWidgetProvider } from "./widgets/IWidgetProvider";
 
 const providers: Record<string, new () => IWidgetProvider> = {
@@ -13,6 +14,7 @@ const providers: Record<string, new () => IWidgetProvider> = {
   uptime: UptimeProvider,
   radarr: RadarrProvider,
   sonarr: SonarrProvider,
+  jellyfin: JellyfinProvider,
 };
 
 export default providers;
