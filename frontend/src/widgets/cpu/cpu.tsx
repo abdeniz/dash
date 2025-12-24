@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useWidgetData } from "@/hooks/use-widget-data"
 import { WidgetProps } from "../types"
 
-export function CPU(widget: WidgetProps) {
+export function Cpu(widget: WidgetProps) {
   const { data, isLoading } = useWidgetData<{ avg: number }>(widget)
 
   if (isLoading) {
