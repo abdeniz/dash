@@ -11,7 +11,8 @@
   },
   "scripts": {
     "prepare": "husky",
-    "sync": "bun run ./scripts/sync-widgets.ts"
+    "sync": "bun run ./scripts/sync-widgets.ts",
+    "check": "bun run ./scripts/sync-widgets.ts --check"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [

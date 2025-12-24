@@ -1,15 +1,11 @@
 #!/usr/bin/env bun
-// sync-widgets.ts
-// Usage: bun run sync-widgets.ts
-// This script checks widgets/registry.yaml and ensures all registries and files are in sync.
 /* eslint-disable */
-import { readFile, writeFile, access } from "fs/promises";
+import { readFile, writeFile, access, mkdir } from "fs/promises";
 import chalk from "chalk";
 import path from "path";
 import yaml from "js-yaml";
 
 const __dirname = import.meta.dirname || process.cwd();
-
 const root = path.resolve(__dirname, "..");
 const appDir = path.join(root, "app");
 const serverProvidersDir = path.join(
@@ -31,6 +27,18 @@ const widgetsGenPath = path.join(widgetsDir, "widgets.gen.ts");
 const definitionsPath = path.join(widgetsDir, "definitions.gen.ts");
 const registryYamlPath = path.join(root, "widget-registry.yaml");
 
+interface WidgetRegistryEntry {
+  type: string;
+  label: string;
+  category: string;
+  layout: { minW: number; minH: number; maxW?: number; maxH?: number };
+  config?: Record<string, any>;
+}
+
+// CLI flag
+const args = process.argv.slice(2);
+const checkMode = args.includes("--check");
+
 async function fileExists(p: string) {
   try {
     await access(p);
@@ -40,181 +48,10 @@ async function fileExists(p: string) {
   }
 }
 
-async function main() {
-  // 1. Read YAML
-  const yamlRaw = await readFile(registryYamlPath, "utf8");
-  const yamlData = yaml.load(yamlRaw) as any;
-  const widgets = Array.isArray(yamlData) ? yamlData : yamlData.widgets;
-
-  const providerImports = widgets
-    .map(
-      (w: any) =>
-        `import { ${capitalize(w.type)}Provider } from "./widgets/${capitalize(w.type)}Provider"`,
-    )
-    .join("\n");
-
-  const providersObj = widgets
-    .map((w: any) => `  ${w.type}: ${capitalize(w.type)}Provider,`)
-    .join("\n");
-
-  const providersFile = `${providerImports}
-import type { IWidgetProvider } from "./widgets/IWidgetProvider"
-
-const providers: Record<string, new () => IWidgetProvider> = {
-${providersObj}
-}
-
-export default providers
-`;
-
-  await writeFile(serverRegistryPath, providersFile);
-  console.log(
-    chalk.greenBright(
-      "[AUTO] Synced app/src/server/providers/index.gen.ts from widget-registry.yaml",
-    ),
-  );
-
-  // 2. Generate widgets.gen.ts
-  const widgetImports = widgets
-    .map(
-      (w: any) =>
-        `import { ${capitalize(w.type)} } from "./${w.type}/${w.type}"`,
-    )
-    .join("\n");
-
-  const widgetsObj = widgets
-    .map((w: any) => `  ${w.type}: ${capitalize(w.type)},`)
-    .join("\n");
-
-  const widgetsFile = `${widgetImports}
-import type { WidgetType } from "./definitions.gen"
-
-export const widgets: Record<WidgetType, React.ComponentType<any>> = {
-${widgetsObj}
-}
-`;
-
-  await writeFile(widgetsGenPath, widgetsFile);
-  console.log(
-    chalk.greenBright(
-      "[AUTO] Synced app/src/widgets/widgets.gen.ts from widget-registry.yaml",
-    ),
-  );
-
-  // 3. Check for each widget type
-  for (const widget of widgets) {
-    const type = widget.type;
-    // Provider file
-    const providerFile = path.join(
-      serverProvidersDir,
-      `${capitalize(type)}Provider.ts`,
-    );
-    const providerExists = await fileExists(providerFile);
-    if (!providerExists) {
-      console.log(
-        chalk.yellow(`[WARN] Provider file missing: ${providerFile}`),
-      );
-      // Autogenerate provider stub
-      const providerStub = `import type { IWidgetProvider } from "./IWidgetProvider"
-
-export class ${capitalize(type)}Provider implements IWidgetProvider {
-  async getValue(config: any): Promise<any> {
-    // TODO: Implement ${capitalize(type)} API integration
-    return { message: "${capitalize(type)} data not implemented yet", config }
-  }
-}
-`;
-      await writeFile(providerFile, providerStub);
-      console.log(chalk.green(`[AUTO] Created provider stub: ${providerFile}`));
-    }
-    // Component file
-    const componentDir = path.join(widgetsDir, type);
-    const componentFile = path.join(componentDir, `${type}.tsx`);
-    const componentExists = await fileExists(componentFile);
-    if (!componentExists) {
-      console.log(
-        chalk.yellow(`[WARN] Component file missing: ${componentFile}`),
-      );
-      // Autogenerate component stub
-      await fsMkdirIfNotExists(componentDir);
-      const componentStub = `import {
-      Card,
-      CardContent,
-      CardDescription,
-      CardHeader,
-      CardTitle,
-    } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
-import { useWidgetData } from "@/hooks/use-widget-data"
-import { WidgetProps } from "../types"
-
-    export function ${capitalize(type)}({ widget }: WidgetProps) {
-      const { data, isLoading } = useWidgetData<any>({ widget })
-
-      if (isLoading || !data) {
-        return <Skeleton className="h-full w-full rounded-4xl corner-squircle" />
-      }
-
-      // TODO: Implement ${capitalize(type)} widget UI
-      return (
-        <Card>
-      <CardHeader>
-        <CardTitle>${capitalize(type)} Widget</CardTitle>
-        <CardDescription>Widget ID: {widget.id}</CardDescription>
-      </CardHeader>
-      <CardContent>${capitalize(type)} widget not implemented yet.</CardContent>
-        </Card>
-      )
-    }
-    `;
-      await writeFile(componentFile, componentStub);
-      console.log(
-        chalk.green(`[AUTO] Created component stub: ${componentFile}`),
-      );
-    }
-
-    // Generate definitions.ts from YAML
-    const header = `export const definitions = {\n`;
-    const defs = widgets
-      .map((w: any) => {
-        const configStr =
-          w.config && Object.keys(w.config).length > 0
-            ? `config: ${toTsObjectLiteral(w.config)},`
-            : "config: {},";
-        return `  ${w.type}: {\n    type: "${w.type}",\n    label: "${w.label}",\n    category: "${w.category}",\n    layout: ${toTsObjectLiteral(w.layout)},\n    ${configStr}\n  },`;
-      })
-      .join("\n\n");
-    const footer = `\n} as const\n\nexport type WidgetType = keyof typeof definitions\n`;
-    const newDefinitions = header + defs + footer;
-    await writeFile(definitionsPath, newDefinitions);
-    console.log(
-      chalk.cyan(`[AUTO] Synced ${widget.label} from widget-registry.yaml`),
-    );
-    // Definitions registry
-    const definitionsText = await readFile(definitionsPath, "utf8");
-    // Check if already present
-    const alreadyDefined = new RegExp(`\\b${type}: \\{`).test(definitionsText);
-    if (!alreadyDefined) {
-      // Find where to insert (before closing } as const)
-      const insertPos = definitionsText.lastIndexOf("} as const");
-      if (insertPos === -1) {
-        console.log(
-          chalk.red(
-            "[ERROR] Could not find definitions object in definitions.ts",
-          ),
-        );
-      } else {
-        const stub = `  ${type}: {\n    type: \"${type}\",\n    label: \"${capitalize(type)}\",\n    category: \"custom\",\n    layout: { minW: 2, minH: 2, maxW: 4, maxH: 4 },\n    config: {},\n  },\n`;
-        const updated =
-          definitionsText.slice(0, insertPos) +
-          stub +
-          definitionsText.slice(insertPos);
-        await writeFile(definitionsPath, updated);
-        console.log(chalk.green(`[AUTO] Appended ${type} to definitions`));
-      }
-    }
-  }
-  console.log(chalk.blueBright("Widget sync check complete."));
+function capitalizeType(type: string) {
+  return /^[A-Z0-9]+$/.test(type)
+    ? type
+    : type[0].toUpperCase() + type.slice(1);
 }
 
 function toTsObjectLiteral(obj: any, indent = 2): string {
@@ -226,28 +63,197 @@ function toTsObjectLiteral(obj: any, indent = 2): string {
   return (
     "{\n" +
     Object.entries(obj)
-      .map(
-        ([k, v]) => `${pad(indent)}${k}: ${toTsObjectLiteral(v, indent + 2)},`,
-      )
+      .map(([k, v]) => {
+        const safeKey = /^[a-zA-Z_$][\w$]*$/.test(k) ? k : JSON.stringify(k);
+        return `${pad(indent)}${safeKey}: ${toTsObjectLiteral(v, indent + 2)},`;
+      })
       .join("\n") +
     `\n${pad(indent - 2)}}`
   );
-}
-
-function capitalize(str: string) {
-  if (str === str.toUpperCase()) return str;
-
-  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 async function fsMkdirIfNotExists(dir: string) {
   try {
     await access(dir);
   } catch {
-    await import("fs/promises").then((fs) =>
-      fs.mkdir(dir, { recursive: true }),
-    );
+    if (checkMode) {
+      console.log(chalk.yellow(`[CHECK] Would create directory: ${dir}`));
+    } else {
+      await mkdir(dir, { recursive: true });
+    }
   }
+}
+
+async function writeFileIfNotCheck(path: string, content: string) {
+  if (checkMode) {
+    console.log(chalk.yellow(`[CHECK] Would write: ${path}`));
+  } else {
+    await writeFile(path, content);
+  }
+}
+
+async function generateServerProviders(widgets: WidgetRegistryEntry[]) {
+  const imports = widgets
+    .map(
+      (w) =>
+        `import { ${capitalizeType(w.type)}Provider } from "./widgets/${capitalizeType(w.type)}Provider"`,
+    )
+    .join("\n");
+
+  const providersObj = widgets
+    .map((w) => `  ${w.type}: ${capitalizeType(w.type)}Provider,`)
+    .join("\n");
+
+  const content = `// ⚠️ AUTO-GENERATED FILE — DO NOT EDIT
+${imports}
+import type { IWidgetProvider } from "./widgets/IWidgetProvider"
+
+const providers: Record<string, new () => IWidgetProvider> = {
+${providersObj}
+}
+
+export default providers
+`;
+
+  await writeFileIfNotCheck(serverRegistryPath, content);
+  console.log(chalk.greenBright("[AUTO] Synced server providers"));
+}
+
+async function generateWidgetsIndex(widgets: WidgetRegistryEntry[]) {
+  const imports = widgets
+    .map(
+      (w) =>
+        `import { ${capitalizeType(w.type)} } from "./${w.type}/${w.type}"`,
+    )
+    .join("\n");
+  const widgetsObj = widgets
+    .map((w) => `  ${w.type}: ${capitalizeType(w.type)},`)
+    .join("\n");
+
+  const content = `// ⚠️ AUTO-GENERATED FILE — DO NOT EDIT
+${imports}
+import type { WidgetType } from "./definitions.gen"
+
+export const widgets: Record<WidgetType, React.ComponentType<any>> = {
+${widgetsObj}
+}
+`;
+
+  await writeFileIfNotCheck(widgetsGenPath, content);
+  console.log(chalk.greenBright("[AUTO] Synced widget components index"));
+}
+
+async function generateDefinitions(widgets: WidgetRegistryEntry[]) {
+  const header = `// ⚠️ AUTO-GENERATED FILE — DO NOT EDIT
+export const definitions = {\n`;
+
+  const defs = widgets
+    .map((w) => {
+      const configStr =
+        w.config && Object.keys(w.config).length > 0
+          ? `config: ${toTsObjectLiteral(w.config)},`
+          : "config: {},";
+      return `  ${w.type}: {
+    type: "${w.type}",
+    label: "${w.label}",
+    category: "${w.category}",
+    layout: ${toTsObjectLiteral(w.layout)},
+    ${configStr}
+  },`;
+    })
+    .join("\n\n");
+
+  const footer = `\n} as const\n\nexport type WidgetType = keyof typeof definitions\n`;
+
+  await writeFileIfNotCheck(definitionsPath, header + defs + footer);
+  console.log(chalk.cyan("[AUTO] Synced widget definitions"));
+}
+
+async function ensureStubs(widgets: WidgetRegistryEntry[]) {
+  for (const w of widgets) {
+    const type = w.type;
+    const providerFile = path.join(
+      serverProvidersDir,
+      `${capitalizeType(type)}Provider.ts`,
+    );
+    if (!(await fileExists(providerFile))) {
+      const stub = `import type { IWidgetProvider } from "./IWidgetProvider"
+
+export class ${capitalizeType(type)}Provider implements IWidgetProvider {
+  async getValue(config: any): Promise<any> {
+    return { message: "${capitalizeType(type)} data not implemented yet", config }
+  }
+}
+`;
+      await writeFileIfNotCheck(providerFile, stub);
+      if (!checkMode)
+        console.log(
+          chalk.green(`[AUTO] Created provider stub: ${providerFile}`),
+        );
+    }
+
+    const componentDir = path.join(widgetsDir, type);
+    const componentFile = path.join(componentDir, `${type}.tsx`);
+    if (!(await fileExists(componentFile))) {
+      await fsMkdirIfNotExists(componentDir);
+      const stub = `import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
+import { useWidgetData } from "@/hooks/use-widget-data"
+import { WidgetProps } from "../types"
+
+export function ${capitalizeType(type)}({ widget }: WidgetProps) {
+  const { data, isLoading } = useWidgetData<any>({ widget })
+
+  if (isLoading || !data) {
+    return <Skeleton className="h-full w-full rounded-4xl corner-squircle" />
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>${capitalizeType(type)} Widget</CardTitle>
+        <CardDescription>Widget ID: {widget.id}</CardDescription>
+      </CardHeader>
+      <CardContent>${capitalizeType(type)} widget not implemented yet.</CardContent>
+    </Card>
+  )
+}
+`;
+      await writeFileIfNotCheck(componentFile, stub);
+      if (!checkMode)
+        console.log(
+          chalk.green(`[AUTO] Created component stub: ${componentFile}`),
+        );
+    }
+  }
+}
+
+async function main() {
+  const yamlRaw = await readFile(registryYamlPath, "utf8");
+  const yamlData = yaml.load(yamlRaw) as any;
+  const widgets: WidgetRegistryEntry[] = Array.isArray(yamlData)
+    ? yamlData
+    : yamlData.widgets;
+
+  // Sort widgets for deterministic output
+  widgets.sort((a, b) => a.type.localeCompare(b.type));
+
+  await generateServerProviders(widgets);
+  await generateWidgetsIndex(widgets);
+  await generateDefinitions(widgets);
+  await ensureStubs(widgets);
+
+  console.log(
+    chalk.blueBright(
+      `Widget sync check complete${checkMode ? " [CHECK MODE]" : ""}.`,
+    ),
+  );
 }
 
 main().catch((e) => {
