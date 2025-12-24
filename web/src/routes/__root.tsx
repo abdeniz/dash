@@ -51,7 +51,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="bg-background w-screen relative min-h-screen">
-        <ThemeProvider defaultTheme="system" storageKey="dashy-ui-theme">
+        <ThemeProvider>
           <QueryClientProvider client={queryClient}>
             <HotkeysProvider />
             <DashboardToolbar />
