@@ -16,7 +16,7 @@
   "files": [],
   "references": [
     { "path": "./widgets" },
-    { "path": "./web" },
+    { "path": "./frontend" },
     { "path": "./server" }
   ]
 }

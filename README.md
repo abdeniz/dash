@@ -22,7 +22,7 @@
 ```
 dash/
 ├── server/   # ElysiaJS
-├── web/      # Tanstack Start
+├── frontend/      # Tanstack Start
 ├── widgets/  # Shared widget definitions/types
 ```
 
@@ -34,7 +34,7 @@ dash/
 
 ### Prerequisites
 
-- [Bun](https://bun.sh/) (for both server and web)
+- [Bun](https://bun.sh/) (for both server and frontend)
 
 ### Install dependencies
 
@@ -42,7 +42,7 @@ dash/
 # At repo root
 bun install
 cd server && bun install
-cd web && bun install
+cd frontend && bun install
 ```
 
 ### Run the backend (Elysia/Bun)
@@ -56,7 +56,7 @@ bun run dev
 ### Run the frontend (React/Vite)
 
 ```bash
-cd web
+cd frontend
 bun run dev
 # App runs at http://localhost:3000
 ```
@@ -75,7 +75,7 @@ bun run dev
    - This will:
    - Generate or update provider stubs in `server/src/providers/widgets/`
    - Regenerate the provider registry in `server/src/providers/index.ts`
-   - Generate or update frontend component stubs in `web/src/widgets/<type>/<type>.tsx`
+   - Generate or update frontend component stubs in `frontend/src/widgets/<type>/<type>.tsx`
    - Regenerate widget definitions in `widgets/src/definitions.ts`
    - All code and mappings stay in sync with your YAML source of truth.
 

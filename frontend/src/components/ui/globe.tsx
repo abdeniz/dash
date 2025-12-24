@@ -1,8 +1,8 @@
-import createGlobe, { COBEOptions } from 'cobe'
-import { useMotionValue, useSpring } from 'motion/react'
-import { useEffect, useRef } from 'react'
+import createGlobe, { COBEOptions } from "cobe"
+import { useMotionValue, useSpring } from "motion/react"
+import { useEffect, useRef } from "react"
 
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils"
 
 export function Globe({
   className,
@@ -30,7 +30,7 @@ export function Globe({
       }
     }
 
-    window.addEventListener('resize', onResize)
+    window.addEventListener("resize", onResize)
     onResize()
 
     const globe = createGlobe(canvasRef.current!, {
@@ -45,23 +45,23 @@ export function Globe({
       },
     })
 
-    setTimeout(() => (canvasRef.current!.style.opacity = '1'), 0)
+    setTimeout(() => (canvasRef.current!.style.opacity = "1"), 0)
     return () => {
       globe.destroy()
-      window.removeEventListener('resize', onResize)
+      window.removeEventListener("resize", onResize)
     }
   }, [rs, config])
 
   return (
     <div
       className={cn(
-        'absolute inset-0 mx-auto aspect-square w-full max-w-150 cursor-auto',
+        "absolute inset-0 mx-auto aspect-square w-full max-w-150 cursor-auto",
         className,
       )}
     >
       <canvas
         className={cn(
-          'size-full opacity-0 transition-opacity duration-500 contain-[layout_paint_size]',
+          "size-full opacity-0 transition-opacity duration-500 contain-[layout_paint_size]",
         )}
         ref={canvasRef}
       />
