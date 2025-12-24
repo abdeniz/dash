@@ -1,5 +1,5 @@
 import { SonarrClient } from "tsarr";
-import { IWidgetProvider } from "./WidgetProvider";
+import { IWidgetProvider } from "./IWidgetProvider";
 import { getSonarrValue } from "../clients/sonarr";
 
 export class SonarrProvider implements IWidgetProvider<{

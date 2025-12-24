@@ -1,5 +1,5 @@
 import { getMemory } from "../clients/system";
-import { IWidgetProvider } from "./WidgetProvider";
+import { IWidgetProvider } from "./IWidgetProvider";
 
 export class MemoryProvider implements IWidgetProvider {
   async getValue() {
