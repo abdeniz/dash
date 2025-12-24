@@ -1,8 +1,10 @@
 import {
   createWidget,
+  deleteWidget,
   getWidgetById,
   getWidgets,
   getWidgetValue,
+  saveLayout,
 } from "@/services/widgets.service";
 import { Elysia, t } from "elysia";
 import { createWidgetSchema, getWidgetValueSchema } from "./widgets.schema";
@@ -42,4 +44,26 @@ export const widgetsRoutes = new Elysia({ prefix: "/widgets" })
   )
   .post("/", ({ body }) => createWidget(body), {
     body: createWidgetSchema,
-  });
+  })
+  .post("/layout", ({ body }) => saveLayout(body), {
+    body: t.Array(
+      t.Object({
+        i: t.String(),
+        x: t.Number(),
+        y: t.Number(),
+        w: t.Number(),
+        h: t.Number(),
+      }),
+    ),
+  })
+  .delete(
+    "/:id",
+    ({ params: { id } }) => {
+      deleteWidget(id);
+    },
+    {
+      params: t.Object({
+        id: t.Integer(),
+      }),
+    },
+  );

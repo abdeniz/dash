@@ -5,7 +5,7 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import "react-grid-layout/css/styles.css"
 import "react-resizable/css/styles.css"
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 1,
@@ -13,9 +13,11 @@ const queryClient = new QueryClient({
   },
 })
 
+import { DashboardToolbar } from "@/components/grid/dashboard-toolbar"
+import { Toaster } from "@/components/ui/sonner"
+import { HotkeysProvider } from "@/providers/hotkeys-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 import appCss from "../styles.css?url"
-import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
 
 export const Route = createRootRoute({
   head: () => ({
@@ -48,13 +50,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="bg-background">
+      <body className="bg-background w-screen relative min-h-screen">
         <ThemeProvider defaultTheme="system" storageKey="dashy-ui-theme">
           <QueryClientProvider client={queryClient}>
-            <main className="relative max-w-400 mx-auto p-3 md:p-6">
-              {children}
-            </main>
-            <AnimatedThemeToggler className="absolute bottom-2 left-2" />
+            <HotkeysProvider />
+            <DashboardToolbar />
+            {children}
+
+            <Toaster position="top-right" richColors />
 
             <TanStackDevtools
               config={{

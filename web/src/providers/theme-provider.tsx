@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from "react"
 
-export type Theme = 'dark' | 'light' | 'system'
+export type Theme = "dark" | "light" | "system"
 
 type ThemeProviderProps = {
   children: React.ReactNode
@@ -14,7 +14,7 @@ type ThemeProviderState = {
 }
 
 const initialState: ThemeProviderState = {
-  theme: 'system',
+  theme: "system",
   setTheme: () => null,
 }
 
@@ -22,8 +22,8 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 
 export function ThemeProvider({
   children,
-  defaultTheme = 'system',
-  storageKey = 'vite-ui-theme',
+  defaultTheme = "system",
+  storageKey = "dash-theme",
   ...props
 }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>(defaultTheme) // safe default
@@ -36,12 +36,12 @@ export function ThemeProvider({
     const root = window.document.documentElement
 
     const applyTheme = (t: Theme) => {
-      root.classList.remove('light', 'dark')
-      if (t === 'system') {
-        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+      root.classList.remove("light", "dark")
+      if (t === "system") {
+        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
           .matches
-          ? 'dark'
-          : 'light'
+          ? "dark"
+          : "light"
         root.classList.add(systemTheme)
       } else {
         root.classList.add(t)
@@ -53,15 +53,15 @@ export function ThemeProvider({
 
   const setTheme = (t: Theme) => {
     setThemeState(t)
-    if (typeof window !== 'undefined') localStorage.setItem(storageKey, t)
+    if (typeof window !== "undefined") localStorage.setItem(storageKey, t)
 
     const root = window.document.documentElement
-    root.classList.remove('light', 'dark')
-    if (t === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+    root.classList.remove("light", "dark")
+    if (t === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
-        ? 'dark'
-        : 'light'
+        ? "dark"
+        : "light"
       root.classList.add(systemTheme)
     } else {
       root.classList.add(t)
@@ -79,7 +79,7 @@ export const useTheme = () => {
   const context = useContext(ThemeProviderContext)
 
   if (context === undefined)
-    throw new Error('useTheme must be used within a ThemeProvider')
+    throw new Error("useTheme must be used within a ThemeProvider")
 
   return context
 }

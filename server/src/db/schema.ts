@@ -8,7 +8,7 @@ export const widget = sqliteTable("widget", {
   y: real("y").notNull(),
   width: real("width").notNull(),
   height: real("height").notNull(),
-  pollInterval: integer("poll_interval"),
+  pollInterval: integer("poll_interval").default(5000).notNull(),
   config: text("config", { mode: "json" }).notNull(),
 });
 

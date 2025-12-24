@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { CarouselItem } from "@/components/ui/carousel"
-import { Movie } from "./radarr"
+import { Movie } from "./types"
 type MovieCardProps = {
   movie: Movie
 }

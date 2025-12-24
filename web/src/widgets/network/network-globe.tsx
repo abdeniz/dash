@@ -1,7 +1,7 @@
-import { Globe } from '@/components/ui/globe'
-import { Theme } from '@/providers/theme-provider'
-import { COBEOptions } from 'cobe'
-import { memo } from 'react'
+import { Globe } from "@/components/ui/globe"
+import { Theme } from "@/providers/theme-provider"
+import { COBEOptions } from "cobe"
+import { memo } from "react"
 
 const HELSINKI_LOCATION: [number, number] = [60.1695, 24.9354]
 
@@ -17,7 +17,7 @@ function NetworkGlobeComponent({ theme }: NetworkGlobeProps) {
     devicePixelRatio: 2,
     phi: 0,
     theta: 0.3,
-    dark: theme === 'dark' ? 1 : 0,
+    dark: theme === "dark" ? 1 : 0,
     diffuse: 0.1,
     mapSamples: 11000,
     mapBrightness: 1,

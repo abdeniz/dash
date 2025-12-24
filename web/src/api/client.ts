@@ -1,4 +1,4 @@
-import { treaty } from '@elysiajs/eden'
-import type { App } from '@server/src/index'
+import { treaty } from "@elysiajs/eden"
+import type { App } from "@server/src/index"
 
-export const app = treaty<App>('http://localhost:3003')
+export const app = treaty<App>(import.meta.env.VITE_API_BASE_URL)
