@@ -1,16 +1,9 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useWidgetData } from "@/hooks/use-widget-data"
-import { WidgetProps } from "../types"
+import { PlayIcon } from "@phosphor-icons/react"
 import { JellyfinData } from "@server/src/providers/clients/jellyfin"
-import { Progress } from "@/components/ui/progress"
-import { PlayIcon, VideoIcon } from "@phosphor-icons/react"
+import { WidgetProps } from "../types"
 
 export function Jellyfin({ widget }: WidgetProps) {
   const { data, isLoading } = useWidgetData<JellyfinData>({ widget })
@@ -19,20 +12,6 @@ export function Jellyfin({ widget }: WidgetProps) {
     return <Skeleton className="h-full w-full rounded-4xl corner-squircle" />
   }
 
-  function formatTime(ticks: number) {
-    // Jellyfin uses 10,000,000 ticks per second
-    const totalSeconds = Math.floor(ticks / 10_000_000)
-    const hours = Math.floor(totalSeconds / 3600)
-    const minutes = Math.floor((totalSeconds % 3600) / 60)
-    const seconds = totalSeconds % 60
-    if (hours > 0) {
-      return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
-        .toString()
-        .padStart(2, "0")}`
-    }
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`
-  }
-  // TODO: Implement Jellyfin widget UI
   return (
     <Card className="relative">
       <CardContent>
