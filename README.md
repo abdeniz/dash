@@ -19,14 +19,14 @@
 ## Architecture
 
 ```
-dashy/
-├── server/   # Elysia (Bun) backend, Drizzle ORM, SQLite
-├── web/      # React 19, Vite, TanStack Router/Query, Tailwind
+dash/
+├── server/   # ElysiaJS
+├── web/      # Tanstack Start
 ├── widgets/  # Shared widget definitions/types
 ```
 
 - **Backend:** ElysiaJS, provider registry for widget data, SQLite via Drizzle ORM
-- **Frontend:** React 19, TanStack Router/Query, drag-drop grid, widget/component mapping
+- **Frontend:** Tanstack Start, drag-drop grid, widget/component mapping
 - **Shared:** Widget definitions and types in `widgets/` for type-safe cross-package use
 
 ## Getting Started
@@ -59,12 +59,6 @@ cd web
 bun run dev
 # App runs at http://localhost:3000
 ```
-
-## Project Structure
-
-- `server/` — Elysia backend, Drizzle ORM, widget provider registry, routes, DB schema
-- `web/` — React 19 frontend, TanStack Router/Query, widgets, hooks, components
-- `widgets/` — Shared widget definitions/types for both server and web
 
 ## Extending Widgets
 
