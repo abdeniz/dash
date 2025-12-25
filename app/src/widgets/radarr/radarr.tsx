@@ -3,6 +3,7 @@ import { MovieCarousel } from "./movie-carousel"
 import type { RadarrData } from "./types"
 import type { WidgetProps } from "../types"
 import { Card, CardContent } from "@/components/ui/card"
+import { DockerStats } from "@/components/docker-stats"
 
 import {
   HoverCard,
@@ -79,6 +80,10 @@ export function Radarr(widget: WidgetProps) {
             <p className="text-muted-foreground text-base uppercase tracking-wider">
               Radarr
             </p>
+
+            {data.docker && (
+              <DockerStats stats={data.docker.stats} info={data.docker.info} />
+            )}
           </div>
         </div>
 

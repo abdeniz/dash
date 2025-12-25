@@ -178,9 +178,10 @@ async function ensureStubs(widgets: WidgetRegistryEntry[]) {
     );
     if (!(await fileExists(providerFile))) {
       const stub = `import type { IWidgetProvider } from "./IWidgetProvider"
+import type { WidgetConfig } from "./types"
 
-export class ${capitalizeType(type)}Provider implements IWidgetProvider {
-  async getValue(config: any): Promise<any> {
+export class ${capitalizeType(type)}Provider implements IWidgetProvider<WidgetConfig<"${type}">> {
+  async getValue(config: WidgetConfig<"${type}">): Promise<any> {
     return { message: "${capitalizeType(type)} data not implemented yet", config }
   }
 }

@@ -34,6 +34,10 @@ widgets:
         required: true
         secret: true
         label: API Key
+      docker:
+        type: string
+        required: false
+        label: Docker Container
   - type: sonarr
     label: Sonarr
     category: media
@@ -49,6 +53,10 @@ widgets:
         required: true
         secret: true
         label: API Key
+      docker:
+        type: string
+        required: false
+        label: Docker Container
   - type: jellyfin
     label: Jellyfin
     category: media
@@ -64,6 +72,10 @@ widgets:
         required: true
         secret: true
         label: API Key
+      docker:
+        type: string
+        required: false
+        label: Docker Container
 
   # Example: add a new widget below
   # - type: jellyfin

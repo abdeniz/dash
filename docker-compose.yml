@@ -9,6 +9,7 @@ services:
       - "80:80"
     volumes:
       - dash-data:/app/app/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       - NODE_ENV=production
       - PORT=80

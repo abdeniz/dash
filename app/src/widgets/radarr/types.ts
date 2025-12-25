@@ -1,3 +1,8 @@
+import {
+  ContainerInfo,
+  ContainerStats,
+} from "@/server/providers/services/docker"
+
 export type Movie = {
   id: number
   title: string
@@ -18,4 +23,8 @@ export type RadarrData = {
   queued: number
   movies: Array<Movie>
   url: string
+  docker: {
+    stats: ContainerStats
+    info: ContainerInfo
+  }
 }

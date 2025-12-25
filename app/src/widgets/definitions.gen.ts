@@ -1,3 +1,4 @@
+// ⚠️ AUTO-GENERATED FILE — DO NOT EDIT
 export const definitions = {
   cpu: {
     type: "cpu",
@@ -10,6 +11,37 @@ export const definitions = {
       maxH: 3,
     },
     config: {},
+  },
+
+  jellyfin: {
+    type: "jellyfin",
+    label: "Jellyfin",
+    category: "media",
+    layout: {
+      minW: 4,
+      minH: 4,
+      maxW: 9,
+      maxH: 6,
+    },
+    config: {
+      url: {
+        type: "string",
+        required: true,
+        label: "URL",
+        secret: false,
+      },
+      apiKey: {
+        type: "string",
+        required: true,
+        secret: true,
+        label: "API Key",
+      },
+      docker: {
+        type: "string",
+        required: false,
+        label: "Docker Container",
+      },
+    },
   },
 
   memory: {
@@ -28,19 +60,6 @@ export const definitions = {
   network: {
     type: "network",
     label: "Network",
-    category: "system",
-    layout: {
-      minW: 3,
-      minH: 2,
-      maxW: 3,
-      maxH: 3,
-    },
-    config: {},
-  },
-
-  uptime: {
-    type: "uptime",
-    label: "Uptime",
     category: "system",
     layout: {
       minW: 3,
@@ -74,6 +93,11 @@ export const definitions = {
         secret: true,
         label: "API Key",
       },
+      docker: {
+        type: "string",
+        required: false,
+        label: "Docker Container",
+      },
     },
   },
 
@@ -100,33 +124,25 @@ export const definitions = {
         secret: true,
         label: "API Key",
       },
+      docker: {
+        type: "string",
+        required: false,
+        label: "Docker Container",
+      },
     },
   },
 
-  jellyfin: {
-    type: "jellyfin",
-    label: "Jellyfin",
-    category: "media",
+  uptime: {
+    type: "uptime",
+    label: "Uptime",
+    category: "system",
     layout: {
-      minW: 4,
-      minH: 4,
-      maxW: 9,
-      maxH: 6,
+      minW: 3,
+      minH: 2,
+      maxW: 3,
+      maxH: 3,
     },
-    config: {
-      url: {
-        type: "string",
-        required: true,
-        label: "URL",
-        secret: false,
-      },
-      apiKey: {
-        type: "string",
-        required: true,
-        secret: true,
-        label: "API Key",
-      },
-    },
+    config: {},
   },
 } as const
 

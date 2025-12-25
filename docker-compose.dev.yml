@@ -12,6 +12,7 @@ services:
       - ./app/public:/app/app/public
       - ./app/data:/app/app/data
       - ./app/drizzle:/app/app/drizzle
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       - NODE_ENV=development
       - PORT=3000

@@ -32,7 +32,7 @@ export function useUptime({ widget }: WidgetProps): {
   return { uptime: formatUptime(data.uptime + tick), isLoading }
 }
 
-function formatUptime(seconds: number): Uptime {
+export function formatUptime(seconds: number): Uptime {
   const h = Math.floor(seconds / 3600)
   const m = Math.floor((seconds % 3600) / 60)
   const s = Math.floor(seconds % 60)

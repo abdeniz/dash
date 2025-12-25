@@ -3,6 +3,7 @@ import type { WidgetProps } from "../types"
 import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useWidgetData } from "@/hooks/use-widget-data"
+import { DockerStats } from "@/components/docker-stats"
 
 export function Jellyfin({ widget }: WidgetProps) {
   const { data, isLoading } = useWidgetData<any>({ widget })
@@ -32,6 +33,10 @@ export function Jellyfin({ widget }: WidgetProps) {
             <p className="text-muted-foreground text-base uppercase tracking-wider">
               Jellyfin
             </p>
+
+            {data.docker && (
+              <DockerStats stats={data.docker.stats} info={data.docker.info} />
+            )}
           </div>
         </div>
       </CardContent>

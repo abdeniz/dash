@@ -21,6 +21,9 @@ const config = defineConfig({
   ssr: {
     external: ["bun:sqlite"],
   },
+  optimizeDeps: {
+    exclude: ["dockerode", "ssh2", "cpu-features"],
+  },
   server: {
     host: "0.0.0.0",
     port: 3000,

@@ -3,6 +3,7 @@ import { ShowCarousel } from "./show-carousel"
 import type { SonarrData } from "./types"
 import type { WidgetProps } from "../types"
 import { Card, CardContent } from "@/components/ui/card"
+import { DockerStats } from "@/components/docker-stats"
 
 import { Skeleton } from "@/components/ui/skeleton"
 
@@ -84,6 +85,10 @@ export function Sonarr(widget: WidgetProps) {
             <p className="text-muted-foreground text-base uppercase tracking-wider">
               Sonarr
             </p>
+
+            {data.docker && (
+              <DockerStats stats={data.docker.stats} info={data.docker.info} />
+            )}
           </div>
         </div>
 

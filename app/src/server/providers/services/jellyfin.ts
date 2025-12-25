@@ -1,11 +1,7 @@
 import { Jellyfin } from "@jellyfin/sdk"
-import { getSessionApi } from "@jellyfin/sdk/lib/utils/api/session-api"
 import type { SessionInfoDto } from "@jellyfin/sdk/lib/generated-client"
-
-export type JellyfinConfig = {
-  url: string
-  apiKey: string
-}
+import { getSessionApi } from "@jellyfin/sdk/lib/utils/api/session-api"
+import { WidgetConfig } from "../widgets/types"
 
 type ActiveStream = {
   username: string
@@ -27,7 +23,7 @@ type ActiveStream = {
 }
 
 export async function getJellyfinValue(
-  config: JellyfinConfig,
+  config: WidgetConfig<"jellyfin">,
 ): Promise<Array<ActiveStream>> {
   try {
     // Initialize Jellyfin SDK

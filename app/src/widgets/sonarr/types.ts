@@ -1,3 +1,8 @@
+import {
+  ContainerInfo,
+  ContainerStats,
+} from "@/server/providers/services/docker"
+
 export type Show = {
   id: number
   title: string
@@ -25,4 +30,8 @@ export type SonarrData = {
   queued: number
   shows: Array<Show>
   url: string
+  docker: {
+    stats: ContainerStats
+    info: ContainerInfo
+  }
 }

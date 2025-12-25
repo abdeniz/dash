@@ -1,9 +1,15 @@
 import { getJellyfinValue } from "../services/jellyfin"
-import type { JellyfinConfig } from "../services/jellyfin"
+import { getDockerData } from "../services/docker"
 import type { IWidgetProvider } from "./IWidgetProvider"
+import { WidgetConfig } from "./types"
 
-export class JellyfinProvider implements IWidgetProvider {
-  async getValue(config: JellyfinConfig): Promise<any> {
-    return getJellyfinValue(config)
+export class JellyfinProvider implements IWidgetProvider<
+  WidgetConfig<"jellyfin">
+> {
+  async getValue(config: WidgetConfig<"jellyfin">): Promise<any> {
+    const result = await getJellyfinValue(config)
+    const docker = await getDockerData(config.docker)
+
+    return { ...result, docker }
   }
 }
