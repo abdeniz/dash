@@ -90,6 +90,34 @@ docker-compose -f docker-compose.dev.yml up
 1. **Edit the registry:**
    - Add or update widget definitions in [`widget-registry.yaml`](widget-registry.yaml) (type, label, category, layout, config schema, etc.)
 
+   **Example widget definition:**
+
+   ```yaml
+   - type: radarr
+     label: Radarr
+     category: media
+     layout: { minW: 4, minH: 4, maxW: 9, maxH: 6 }
+     config:
+       url:
+         type: string
+         required: true
+         label: URL
+         secret: false
+       apiKey:
+         type: string
+         required: true
+         secret: true
+         label: API Key
+       docker:
+         type: string
+         required: false
+         label: Docker Container
+   ```
+
+   - **Config field types:** `string`, `number`
+   - **Required vs optional:** Set `required: true` for mandatory fields, `false` for optional
+   - **Secrets:** Set `secret: true` for sensitive fields (API keys, passwords)
+
 2. **Sync widgets:**
    - From the repo root, run:
      ```bash

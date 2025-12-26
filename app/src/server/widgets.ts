@@ -5,6 +5,7 @@ import type { Widget, WidgetInsert } from "@/db/schema"
 import { orm } from "@/db"
 import { widget as widgetSchema } from "@/db/schema"
 
+// TODO: Update widget cache when widget config is modified
 const widgetConfigCache = new Map<number, Widget>()
 
 export const getWidgets = createServerFn().handler(async () => {

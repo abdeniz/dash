@@ -22,7 +22,7 @@ export function DockerStats({ stats, info }: DockerStatsProps) {
   const uptime = formatUptime(info?.uptime || 0)
 
   return (
-    <Tooltip defaultOpen={true}>
+    <Tooltip>
       <TooltipTrigger>
         <div className="relative cursor-pointer size-5">
           <div className="bg-green-400 size-3 rounded-full animate-ping absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
