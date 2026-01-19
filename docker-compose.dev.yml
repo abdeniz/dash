@@ -1,0 +1,27 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./app/Dockerfile
+      target: dev
+    container_name: dash-app-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app/src:/app/app/src
+      - ./app/public:/app/app/public
+      - ./app/data:/app/app/data
+      - ./app/drizzle:/app/app/drizzle
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_FILE_NAME=/app/app/data/dash.db
+    networks:
+      - dash-network
+    restart: unless-stopped
+
+networks:
+  dash-network:
+    driver: bridge

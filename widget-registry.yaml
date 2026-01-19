@@ -1,0 +1,85 @@
+widgets:
+  - type: cpu
+    label: CPU
+    category: system
+    layout: { minW: 1, minH: 2, maxW: 3, maxH: 3 }
+    config: {}
+  - type: memory
+    label: Memory
+    category: system
+    layout: { minW: 2, minH: 2, maxW: 3, maxH: 3 }
+    config: {}
+  - type: network
+    label: Network
+    category: system
+    layout: { minW: 3, minH: 2, maxW: 3, maxH: 3 }
+    config: {}
+  - type: uptime
+    label: Uptime
+    category: system
+    layout: { minW: 3, minH: 2, maxW: 3, maxH: 3 }
+    config: {}
+  - type: radarr
+    label: Radarr
+    category: media
+    layout: { minW: 4, minH: 4, maxW: 9, maxH: 6 }
+    config:
+      url:
+        type: string
+        required: true
+        label: URL
+        secret: false
+      apiKey:
+        type: string
+        required: true
+        secret: true
+        label: API Key
+      docker:
+        type: string
+        required: false
+        label: Docker Container
+  - type: sonarr
+    label: Sonarr
+    category: media
+    layout: { minW: 4, minH: 4, maxW: 9, maxH: 6 }
+    config:
+      url:
+        type: string
+        required: true
+        label: URL
+        secret: false
+      apiKey:
+        type: string
+        required: true
+        secret: true
+        label: API Key
+      docker:
+        type: string
+        required: false
+        label: Docker Container
+  - type: jellyfin
+    label: Jellyfin
+    category: media
+    layout: { minW: 4, minH: 4, maxW: 9, maxH: 6 }
+    config:
+      url:
+        type: string
+        required: true
+        label: URL
+        secret: false
+      apiKey:
+        type: string
+        required: true
+        secret: true
+        label: API Key
+      docker:
+        type: string
+        required: false
+        label: Docker Container
+
+  # Example: add a new widget below
+  # - type: jellyfin
+  #   label: Jellyfin
+  #   category: custom
+  #   layout: { minW: 2, minH: 2, maxW: 4, maxH: 4 }
+  #   config: {}

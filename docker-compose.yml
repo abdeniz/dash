@@ -1,0 +1,28 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./app/Dockerfile
+      target: prod
+    container_name: dash-app
+    ports:
+      - "80:80"
+    volumes:
+      - dash-data:/app/app/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - NODE_ENV=production
+      - PORT=80
+      - HOST=0.0.0.0
+      - DB_FILE_NAME=/app/app/data/dash.db
+    networks:
+      - dash-network
+    restart: unless-stopped
+
+networks:
+  dash-network:
+    driver: bridge
+
+volumes:
+  dash-data:
+    driver: local

@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "declarationMap": true,
+    "rootDir": ".",
+    "incremental": true,
+    "composite": true,
+    "strict": true
+  },
+  "files": [],
+  "references": [{ "path": "./app" }]
+}

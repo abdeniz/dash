@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "chalk": "^5.6.2",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "husky": "^9.1.7",
+    "js-yaml": "^4.1.1",
+    "prettier": "^3.7.4"
+  },
+  "scripts": {
+    "prepare": "husky",
+    "sync": "bun run ./scripts/sync-widgets.ts",
+    "check": "bun run ./scripts/sync-widgets.ts --check"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.50.0",
+    "@typescript-eslint/parser": "^8.50.0"
+  },
+  "type": "module"
+}

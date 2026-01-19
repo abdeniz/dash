@@ -1,0 +1,197 @@
+/**
+ * Wrap Compactor
+ *
+ * A compaction algorithm that treats grid items like words in a paragraph.
+ * Items flow left-to-right, wrapping to the next row when they reach
+ * the grid edge.
+ *
+ * When dragging:
+ * - Moving an item earlier in the sequence shifts other items down/right
+ * - Moving an item later in the sequence shifts other items up/left
+ *
+ * This creates a natural reordering behavior similar to drag-and-drop
+ * in file managers or card layouts.
+ *
+ * Based on the algorithm from PR #1773 by John Thomson (@JohnThomson).
+ *
+ * @example
+ * ```tsx
+ * import { wrapCompactor } from 'react-grid-layout/extras';
+ *
+ * <GridLayout
+ *   compactor={wrapCompactor}
+ *   layout={layout}
+ *   // ...
+ * />
+ * ```
+ */
+
+import { cloneLayout } from "react-grid-layout/react"
+import type { Compactor, Layout, LayoutItem } from "react-grid-layout/react"
+
+type Mutable<T> = {
+  -readonly [P in keyof T]: T[P]
+}
+
+/**
+ * Check if two layout items collide (overlap).
+ */
+function collides(l1: LayoutItem, l2: LayoutItem): boolean {
+  if (l1.i === l2.i) return false
+  return (
+    l1.x < l2.x + l2.w &&
+    l1.x + l1.w > l2.x &&
+    l1.y < l2.y + l2.h &&
+    l1.y + l1.h > l2.y
+  )
+}
+
+/**
+ * Fast vertical compaction using a "rising tide" algorithm.
+ *
+ * The algorithm works by:
+ * 1. Sorting items by (y, x, static) - top-to-bottom, left-to-right
+ * 2. Maintaining a "tide" array that tracks the highest occupied row per column
+ * 3. For each item, moving it up to meet the tide (closing gaps)
+ * 4. Checking for collisions with static items and adjusting as needed
+ *
+ * This avoids recursive collision resolution, making it O(n log n) overall.
+ *
+ * @param layout - The layout to compact (will be modified in place)
+ * @param cols - Number of columns in the grid
+ * @param allowOverlap - Whether to allow overlapping items
+ */
+function compactVerticalFast(
+  layout: Array<LayoutItem>,
+  cols: number,
+  allowOverlap: boolean,
+): void {
+  const numItems = layout.length
+
+  // Sort items by position: top-to-bottom, left-to-right
+  // Static items are sorted first at each position to reduce collision checks
+  layout.sort((a, b) => {
+    if (a.y < b.y) return -1
+    if (a.y > b.y) return 1
+    if (a.x < b.x) return -1
+    if (a.x > b.x) return 1
+    // Static items sorted first to reduce collision checks
+    if (a.static && !b.static) return -1
+    if (!a.static && b.static) return 1
+    return 0
+  })
+
+  // "Rising tide" - tracks the highest blocked row per column
+  const tide: Array<number> = new Array(cols).fill(0)
+
+  // Collect static items for collision checking
+  const staticItems = layout.filter((item) => item.static)
+  const numStatics = staticItems.length
+  let staticOffset = 0
+
+  for (let i = 0; i < numItems; i++) {
+    const item = layout[i] as Mutable<LayoutItem>
+
+    // Clamp x2 to grid bounds
+    let x2 = item.x + item.w
+    if (x2 > cols) {
+      x2 = cols
+    }
+
+    if (item.static) {
+      // Static items don't move; they become part of the tide
+      // and don't need collision checks against themselves
+      ++staticOffset
+    } else {
+      // Find the minimum gap between the item and the tide
+      let minGap = Infinity
+      for (let x = item.x; x < x2; ++x) {
+        const tideValue = tide[x] ?? 0
+        const gap = item.y - tideValue
+        if (gap < minGap) {
+          minGap = gap
+        }
+      }
+
+      // Close the gap (move item up to meet the tide)
+      if (!allowOverlap || minGap > 0) {
+        item.y -= minGap
+      }
+
+      // Handle collisions with static items
+      for (let j = staticOffset; !allowOverlap && j < numStatics; ++j) {
+        const staticItem = staticItems[j]
+        if (staticItem === undefined) continue
+
+        // Early exit: if static item is below current item, no more collisions possible
+        if (staticItem.y >= item.y + item.h) {
+          break
+        }
+
+        if (collides(item, staticItem)) {
+          // Move current item below the static item
+          item.y = staticItem.y + staticItem.h
+
+          if (j > staticOffset) {
+            // Item was moved; need to recheck with earlier static items
+            // Note: j = staticOffset means after ++j we start at staticOffset + 1,
+            // but staticItems[staticOffset] was already checked or is above us
+            j = staticOffset
+          }
+        }
+      }
+
+      // Reset moved flag
+      item.moved = false
+    }
+
+    // Update tide: mark columns as blocked up to item's bottom
+    const t = item.y + item.h
+    for (let x = item.x; x < x2; ++x) {
+      const currentTide = tide[x] ?? 0
+      if (currentTide < t) {
+        tide[x] = t
+      }
+    }
+  }
+}
+
+/**
+ * Fast vertical compactor - optimized for large layouts.
+ *
+ * Uses a "rising tide" algorithm that achieves O(n log n) complexity
+ * instead of the potentially O(n²) recursive collision resolution.
+ *
+ * Best suited for layouts with 200+ items where compaction performance
+ * becomes noticeable. For smaller layouts, the standard verticalCompactor
+ * works equally well.
+ */
+export const fastVerticalCompactor: Compactor = {
+  type: "horizontal",
+  allowOverlap: false,
+
+  compact(layout: Layout, cols: number): Layout {
+    // Clone the layout since we modify in place
+    const out = cloneLayout(layout)
+    compactVerticalFast(out, cols, false)
+    return out
+  },
+
+  onMove(
+    layout: Layout,
+    item: LayoutItem,
+    x: number,
+    y: number,
+    _cols: number,
+  ): Layout {
+    // Simple move - compact() will be called after
+    const newLayout = cloneLayout(layout) as Array<Mutable<LayoutItem>>
+    const movedItem = newLayout.find((l) => l.i === item.i)
+    if (movedItem) {
+      movedItem.x = x
+      movedItem.y = y
+      movedItem.moved = true
+    }
+    return newLayout
+  },
+}
